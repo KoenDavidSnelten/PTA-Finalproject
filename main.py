@@ -23,7 +23,6 @@ class Token(TypedDict):
     link: Optional[str]  # The link to wikipedia
 
 
-
 def load_tokens(path: str) -> list[Token]:
 
     with open(path, 'r') as f:
@@ -50,7 +49,7 @@ def load_tokens(path: str) -> list[Token]:
 def start_corenlp(
         server_properties: str = 'server.properties',
         port: int = 9000,
-        timeout: int = 20
+        timeout: int = 25,
 ) -> subprocess.Popen[bytes]:
     """Start the corenlp server with the given port and server properties."""
 
@@ -209,6 +208,14 @@ def parse_cit_or_cou(tokens: list[Token]) -> list[Token]:
 def find_nouns(tokens: list[Token]) -> list[Token]:
     return [t for t in tokens if t['pos'].startswith('NN')]
 
+
+def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
+    for token in tokens:
+        if has_hypernym_relation(lemma, token['token']):
+            token['entity'] = ent_class
+    return tokens
+
+
 def parse_animals(tokens: list[Token]) -> list[Token]:
     """
 
@@ -219,11 +226,8 @@ def parse_animals(tokens: list[Token]) -> list[Token]:
     Todo:
         - Use ngrams?
     """
-
-    for token in tokens:
-        if has_hypernym_relation('animal', token['token']):
-            token['entity'] = 'ANI'
-    return tokens
+    
+    return parse(tokens, 'animal', 'ANI')
 
 def parse_sports(tokens: list[Token]) -> list[Token]:
     """
@@ -235,11 +239,7 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
 
     """
 
-
-    for token in tokens:
-        if has_hypernym_relation('sport', token['token']):
-            token['entity'] = 'SPO'
-    return tokens
+    return parse(tokens, 'sport', 'SPO')
 
 
 
