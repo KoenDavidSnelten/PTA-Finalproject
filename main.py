@@ -48,8 +48,9 @@ def load_tokens(path: str) -> list[Token]:
 
 
 def start_corenlp(
-        server_properties: Optional[str] = 'server.properties',
-        port: Optional[int] = 9000,
+        server_properties: str = 'server.properties',
+        port: int = 9000,
+        timeout: int = 20
 ) -> subprocess.Popen[bytes]:
     """Start the corenlp server with the given port and server properties."""
 
@@ -70,8 +71,9 @@ def start_corenlp(
     ]
 
     print('Starting server!')
+    # TODO: Hide the output
     proc = subprocess.Popen(args, cwd=cwd)  # type: ignore
-    time.sleep(15)
+    time.sleep(timeout)
     return proc
 
 
