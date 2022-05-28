@@ -1,29 +1,29 @@
 import argparse
-from collections import defaultdict
 import os
 import subprocess
 import time
 from typing import Optional
 from typing import TypedDict
 
-from nltk.parse.corenlp import CoreNLPParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
+from nltk.parse.corenlp import CoreNLPParser
 from nltk.stem.wordnet import WordNetLemmatizer
 
 
 class Token(TypedDict):
-    start_off: int  # The start (character) offset of the token
-    end_off: int  # The end (character) offset of the token
-    id_: int  # The id of the token
-    token: str  # The token (word) itself
-    pos: str  # The part of speech of the token
-    entity: Optional[str]  # The type of entity (ORG, NAT) or None
-    core_nlp_ent: Optional[str]
-    link: Optional[str]  # The link to wikipedia
+    start_off: int              # The start (character) offset of the token
+    end_off: int                # The end (character) offset of the token
+    id_: int                    # The id of the token
+    token: str                  # The token (word) itself
+    pos: str                    # The part of speech of the token
+    entity: Optional[str]       # The type of entity (ORG, NAT) or None
+    core_nlp_ent: Optional[str] # The type of entity given by corenlp
+    link: Optional[str]         # The link to wikipedia
 
 
 def load_tokens(path: str) -> list[Token]:
+    """Loads the tokens from the given path"""
 
     with open(path, 'r') as f:
         lines = f.readlines()
@@ -101,20 +101,8 @@ def corenlp_parse(tokens: list[Token], *, url: str) -> list[Token]:
     return u_tokens
 
 
-def lemmatize_nouns(nouns: list[str]) -> list[str]:
-    lemmatizer = WordNetLemmatizer()
-    noun_lemmas = [lemmatizer.lemmatize(n, wordnet.NOUN) for n in nouns]
-    return noun_lemmas
-
-
-def create_synsets(lemmas: list[str], pos: Optional[str] = wordnet.NOUN):
-    return [
-        wordnet.synsets(lemma, pos=pos)
-        for lemma in lemmas
-    ]
-
-
 def hypernym_of(synset1: Synset, synset2: Synset) -> bool:
+    """Checks if synset1 is a hypernym of synset2"""
 
     if synset1 == synset2:
         return True
@@ -127,10 +115,9 @@ def hypernym_of(synset1: Synset, synset2: Synset) -> bool:
 
     return False
 
-def has_hypernym_relation(
-    lemma: str,
-    token: str,
-) -> ...:
+
+def has_hypernym_relation(lemma: str, token: str) -> bool:
+    """Checks if there is a relation between the given lemma and token"""
 
     syns: list[Synset] = wordnet.synsets(lemma, pos=wordnet.NOUN)
 
@@ -153,7 +140,6 @@ def parse_cit_or_cou(tokens: list[Token]) -> list[Token]:
 
     Takes a list because tokens can have mutiple words
     """
-
 
     # i = 0
     # while i < len(tokens):
@@ -189,27 +175,32 @@ def parse_cit_or_cou(tokens: list[Token]) -> list[Token]:
     #             break
 
     #     breakpoint()
-        # TODO: Make so that it goes on until next id does not add up
+    # TODO: Make so that it goes on until next id does not add up
 
-        # so i + n while not tokens[n][id]-n == token[id]
-        # if i+1 < len(tokens):
-        #     # Check if the two tokens come after each other (based on id)
-        #     if tokens[i+1]['id_']-1 == token['id_']:
-        #         # Combine the two tokens
-        #         token_str = token['token'] + ' ' + tokens[i+1]['token']
+    # so i + n while not tokens[n][id]-n == token[id]
+    # if i+1 < len(tokens):
+    #     # Check if the two tokens come after each other (based on id)
+    #     if tokens[i+1]['id_']-1 == token['id_']:
+    #         # Combine the two tokens
+    #         token_str = token['token'] + ' ' + tokens[i+1]['token']
 
-        # is_city = has_hypernym_relation('city', token_str)
-        # is_cou = has_hypernym_relation('country', token_str)
-        # breakpoint()
+    # is_city = has_hypernym_relation('city', token_str)
+    # is_cou = has_hypernym_relation('country', token_str)
+    # breakpoint()
 
     return tokens
 
 
 def find_nouns(tokens: list[Token]) -> list[Token]:
+    """Finds all nouns in the given token list"""
     return [t for t in tokens if t['pos'].startswith('NN')]
 
 
 def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
+    """
+    Generic parse function which finds all tokens that are related to the
+    given lemma and assigns them the given entity class (ent_class).
+    """
     for token in tokens:
         if has_hypernym_relation(lemma, token['token']):
             token['entity'] = ent_class
@@ -218,7 +209,6 @@ def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
 
 def parse_animals(tokens: list[Token]) -> list[Token]:
     """
-
     Errors:
         - Classifies 'Afgan' as animal (d0208)
         - Classifies 'humans' as animal (d0208)
@@ -226,8 +216,8 @@ def parse_animals(tokens: list[Token]) -> list[Token]:
     Todo:
         - Use ngrams?
     """
-    
     return parse(tokens, 'animal', 'ANI')
+
 
 def parse_sports(tokens: list[Token]) -> list[Token]:
     """
@@ -242,11 +232,7 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
     return parse(tokens, 'sport', 'SPO')
 
 
-
-
 def main() -> int:
-
-    # Load the tokens
 
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+')
@@ -262,15 +248,16 @@ def main() -> int:
         tokens = load_tokens(filename)
         all_files_tokens.append((filename, tokens))
 
-    # Identity entities of interest (with category)
+    # XXX: Update me, this is for dev
+    tokens = all_files_tokens[0][1]
+
+    # Start corenlp server if needed
     port = 8123
     proc = None
     if not args.server:
         proc = start_corenlp(port=port)
 
-    # XXX: Update me, this is for dev
-    tokens = all_files_tokens[0][1]
-
+    # Identity entities of interest (with category)
     # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
     if proc is not None:
         tokens = corenlp_parse(tokens, url=f'http://localhost:{port}')
@@ -283,9 +270,10 @@ def main() -> int:
 
     # Get animal NEs
     tokens = parse_animals(tokens)
+    # Get sport NEs
     tokens = parse_sports(tokens)
-    # tloc = [t for t in tokens if t['core_nlp_ent'] == 'LOCATION']
-    # t = location_to_cit_or_cou(tloc)
+
+    # TODO: Write output file
     breakpoint()
 
     return 0
