@@ -26,3 +26,9 @@
 ```
 $ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload tokenize,ssplit,pos,depparse,lemma,ner,entitymentions,entitylink -start_port 8125 -port 8125 -timeout 15000 -serverproperties server.properties
 ```
+
+# Create training data
+
+```
+$ find . -name en.tok.off.pos.ent | xargs -I {} python3 make_data.py train/data {}
+```
