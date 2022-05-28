@@ -54,3 +54,13 @@ Test the model:
 ```
 java -cp stanford-ner.jar edu.stanford.nlp.ie.crf.CRFClassifier -loadClassifier ner-model_v0.ser.gz -testFiles ../train/test_data/*
 ```
+
+## Results 
+
+See `train/v1_results.out`
+
+col 0: token
+col 1: gold standard
+col 2: model output
+
+Note: it seems like the model still just is the build in model?
