@@ -1,0 +1,37 @@
+# location of the training file
+# ls -p train_data| grep -v / | tr '\n' ',' | xclip -sel c
+trainFiles = tokens_1653743608.3490827.ent,tokens_1653743608.3798258.ent,tokens_1653743608.4098213.ent,tokens_1653743608.4389489.ent,tokens_1653743608.4681358.ent,tokens_1653743608.497248.ent,tokens_1653743608.527685.ent,tokens_1653743608.556746.ent,tokens_1653743608.5860538.ent,tokens_1653743608.6138334.ent,tokens_1653743608.6430814.ent,tokens_1653743608.6712317.ent,tokens_1653743608.6997943.ent,tokens_1653743608.7302904.ent,tokens_1653743608.7596674.ent,tokens_1653743608.7932465.ent,tokens_1653743608.8247.ent,tokens_1653743608.8538692.ent,tokens_1653743608.8833134.ent,tokens_1653743608.9146261.ent,tokens_1653743609.485225.ent,tokens_1653743609.514206.ent,tokens_1653743609.5438964.ent,tokens_1653743609.5742009.ent,tokens_1653743609.6018476.ent,tokens_1653743609.636535.ent,tokens_1653743609.665669.ent,tokens_1653743609.6952164.ent,tokens_1653743609.7243917.ent,tokens_1653743609.753587.ent,tokens_1653743609.7828586.ent,tokens_1653743609.8123474.ent,tokens_1653743609.841419.ent,tokens_1653743609.8713808.ent,tokens_1653743609.9010022.ent,tokens_1653743609.9365926.ent,tokens_1653743609.967695.ent,tokens_1653743609.9998534.ent,tokens_1653743610.0289345.ent,tokens_1653743610.0575287.ent,tokens_1653743610.0864713.ent,tokens_1653743610.115136.ent,tokens_1653743610.14359.ent,tokens_1653743610.1731112.ent,tokens_1653743610.2016394.ent,tokens_1653743610.230848.ent,tokens_1653743610.2605662.ent,tokens_1653743610.2894855.ent,tokens_1653743610.3191082.ent,tokens_1653743610.3488436.ent,tokens_1653743610.377724.ent,tokens_1653743610.407536.ent,tokens_1653743610.4361634.ent,tokens_1653743610.4681504.ent,tokens_1653743610.4973683.ent,tokens_1653743610.5259213.ent,tokens_1653743610.555422.ent,tokens_1653743610.5846431.ent,tokens_1653743610.6137214.en
+# location where you would like to save (serialize) your
+# classifier; adding .gz at the end automatically gzips the file,
+# making it smaller, and faster to load
+serializeTo = ner-model_v1.ser.gz
+
+# structure of your training file; this tells the classifier that
+# the word is in column 0 and the correct answer is in column 1
+map = word=0,answer=1
+
+# This specifies the order of the CRF: order 1 means that features
+# apply at most to a class pair of previous class and current class
+# or current class and next class.
+maxLeft=1
+
+# these are the features we'd like to train with
+# some are discussed below, the rest can be
+# understood by looking at NERFeatureFactory
+useClassFeature=true
+useWord=true
+# word character ngrams will be included up to length 6 as prefixes
+# and suffixes only 
+useNGrams=true
+noMidNGrams=true
+maxNGramLeng=6
+usePrev=true
+useNext=true
+useDisjunctive=true
+useSequences=true
+usePrevSequences=true
+# the last 4 properties deal with word shape features
+useTypeSeqs=true
+useTypeSeqs2=true
+useTypeySequences=true
+wordShape=chris2useLC
