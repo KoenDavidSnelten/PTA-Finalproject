@@ -27,7 +27,7 @@
 $ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload tokenize,ssplit,pos,depparse,lemma,ner,entitymentions,entitylink -start_port 8125 -port 8125 -timeout 15000 -serverproperties server.properties
 ```
 
-# Create training data
+# Train own Corenlp model
 
 https://nlp.stanford.edu/software/crf-faq.html#a
 
@@ -50,3 +50,7 @@ Download NER train: https://nlp.stanford.edu/software/CRF-NER.html#Download
 java -cp "*" edu.stanford.nlp.ie.crf.CRFClassifier -prop ner.model.props
 ```
 
+Test the model:
+```
+java -cp stanford-ner.jar edu.stanford.nlp.ie.crf.CRFClassifier -loadClassifier ner-model_v0.ser.gz -testFiles ../train/test_data/*
+```
