@@ -19,3 +19,10 @@
   - From wordnet
 - `ENT`: Entertainment
   - ??
+
+# Server
+
+
+```
+$ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload tokenize,ssplit,pos,depparse,lemma,ner,entitymentions,entitylink -start_port 8125 -port 8125 -timeout 15000 -serverproperties server.properties
+```
