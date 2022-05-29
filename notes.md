@@ -2,11 +2,9 @@
 # Classes & How to find
 
 - `COU`: Country/state
-  - From corenlp `LOCATION` 
-  - Check using wordnet for Country
+  - From corenlp `COUNTRY`
 - `CIT`: City
-  - From corenlp `LOCATION` 
-  - Check using wordnet for City
+  - From corenlp `CITY`
 - `NAT`: Natural places
   - Using wordnet?
 - `PER`: Persons
@@ -22,6 +20,13 @@
 
 # Server
 
+**Start the server with `regexner!`**
+
+```
+$  java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload tokenize,ssplit,pos,lemma,ner,regexner,depparse  -start_port 8126 -port 8126 -timeout 15000 -serverproperties server.properties
+```
+
+**Server with auto entity linking (not allowed to use...)**
 
 ```
 $ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload tokenize,ssplit,pos,depparse,lemma,ner,entitymentions,entitylink -start_port 8125 -port 8125 -timeout 15000 -serverproperties server.properties
@@ -55,7 +60,7 @@ Test the model:
 java -cp stanford-ner.jar edu.stanford.nlp.ie.crf.CRFClassifier -loadClassifier ner-model_v0.ser.gz -testFiles ../train/test_data/*
 ```
 
-## Results 
+## Results
 
 See `train/v1_results.out`
 
