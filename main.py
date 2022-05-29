@@ -20,7 +20,7 @@ class Token(TypedDict):
     token: str                  # The token (word) itself
     pos: str                    # The part of speech of the token
     entity: Optional[str]       # The type of entity (ORG, NAT) or None
-    core_nlp_ent: Optional[str] # The type of entity given by corenlp
+    core_nlp_ent: Optional[str]  # The type of entity given by corenlp
     link: Optional[str]         # The link to wikipedia
 
 
