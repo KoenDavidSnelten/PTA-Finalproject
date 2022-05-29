@@ -85,7 +85,7 @@ def corenlp_parse_regexner(tokens: list[Token], *, url: str) -> list[Token]:
     Possible labels:
         EMAIL, URL, CITY, STATE_OR_PROVINCE, COUNTRY, NATIONALITY, RELIGION,
         (job) TITLE, IDEOLOGY, CRIMINAL_CHARGE, CAUSE_OF_DEATH,
-        (Twitter, etc.) HANDLE
+        (Twitter, etc.) HANDLE, PERSON, ORGANIZATION
 
     The found labels are added to Token['core_nlp_ent'] for each token.
 
@@ -199,6 +199,35 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
     return parse(tokens, 'sport', 'SPO')
 
 
+def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
+
+    corenlp_tag_to_ent_cls: dict[str, Optional[str]] = {
+        'PERSON': 'PER',
+        'ORGANIZATION': 'ORG',
+        'EMAIL': None,
+        'URL': None,
+        'CITY': 'CIT',
+        'STATE_OR_PROVINCE': 'COU',
+        'COUNTRY': 'COU',
+        'NATIONALITY': None,  # TODO: Count as country?
+        'RELIGION': None,  # TODO: Count as ORG, ...?
+        'TITLE': None,
+        'IDEOLOGY': None,  # TODO: ORG?
+        'CRIMINAL_CHARGE': None,
+        'CAUSE_OF_DEATH': None,
+        'HANDLE': None,
+        # XXX: Just use country for now, should be more specific
+        'LOCATION': 'COU',
+    }
+
+    for token in tokens:
+        if token['core_nlp_ent'] is not None:
+            if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
+                token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
+
+    return tokens
+
+
 def main() -> int:
 
     parser = argparse.ArgumentParser()
@@ -231,6 +260,8 @@ def main() -> int:
         proc.terminate()
     else:
         tokens = corenlp_parse_regexner(tokens, url=args.server)
+
+    tokens = use_corenlp_tags(tokens)
 
     # Get animal NEs
     tokens = parse_animals(tokens)
