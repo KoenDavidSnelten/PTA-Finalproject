@@ -1,13 +1,15 @@
 import argparse
+import json
 import os
 import subprocess
+import sys
 import time
 from typing import Optional
 from typing import TypedDict
 
+import requests
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
-from nltk.parse.corenlp import CoreNLPParser
 from nltk.stem.wordnet import WordNetLemmatizer
 
 
@@ -18,7 +20,7 @@ class Token(TypedDict):
     token: str                  # The token (word) itself
     pos: str                    # The part of speech of the token
     entity: Optional[str]       # The type of entity (ORG, NAT) or None
-    core_nlp_ent: Optional[str] # The type of entity given by corenlp
+    core_nlp_ent: Optional[str]  # The type of entity given by corenlp
     link: Optional[str]         # The link to wikipedia
 
 
@@ -62,7 +64,7 @@ def start_corenlp(
         cwd + '/*',
         'edu.stanford.nlp.pipeline.StanfordCoreNLPServer',
         # 'edu.stanford.nlp.pipeline.stanfordcorenlpserver',
-        '-preload', 'tokenize,ssplit,pos,lemma,ner,parse,depparse ',
+        '-preload', 'tokenize,ssplit,pos,lemma,ner,regexner,depparse',
         '-start_port', str(port),
         '-port', str(port),
         '-timeout', '15000',
@@ -76,29 +78,53 @@ def start_corenlp(
     return proc
 
 
-def corenlp_parse(tokens: list[Token], *, url: str) -> list[Token]:
-    """Parse the given tokens using corenlp.
+def corenlp_parse_regexner(tokens: list[Token], *, url: str) -> list[Token]:
+    """
+    Perform NER using corenlp regexner annotator.
 
-    Note: The corenlp server is expected to run on the given url.
+    Possible labels:
+        EMAIL, URL, CITY, STATE_OR_PROVINCE, COUNTRY, NATIONALITY, RELIGION,
+        (job) TITLE, IDEOLOGY, CRIMINAL_CHARGE, CAUSE_OF_DEATH,
+        (Twitter, etc.) HANDLE
 
-    TODO:
-    - Distuingish between countries/states and cities (now all are LOCATION)
+    The found labels are added to Token['core_nlp_ent'] for each token.
+
+    Note: NLTK does not implement anything that uses regexner, so this
+    uses the server api directly. Also the server has to be started with
+    'regexner' annotation capabilities (see `start_corenlp` function).
 
     """
 
-    tagger = CoreNLPParser(url=url, tagtype='ner')
     words = [token['token'] for token in tokens]
-    tags = tagger.tag(words)
 
-    u_tokens: list[Token] = []
-    assert len(tokens) == len(tags)
-    for i, token in enumerate(tokens):
-        nt = token
-        if tags[i][1] != 'O':
-            nt['core_nlp_ent'] = tags[i][1]
-        u_tokens.append(nt)
+    params = {
+        'annotators': 'tokenize,ssplit,pos,lemma,ner,regexner',
+        'outputFormat': 'json',
+    }
+    url_params = json.dumps(params)
+    url = f'{url}?properties={url_params}'
+    data = ' '.join(words)
+    res = requests.post(url, data=data)
+    if res.ok:
+        res_data = res.json()
+    else:
+        print(
+            f'Error: Could not parse using regexner. {url=}, {data=}',
+            file=sys.stderr,
+        )
+        return tokens
 
-    return u_tokens
+    i = 0
+    nt = tokens
+    for sentence in res_data['sentences']:
+        for token in sentence['tokens']:
+            assert token['originalText'] == nt[i]['token']
+            if token['ner'] != 'O':
+                nt[i]['core_nlp_ent'] = token['ner']
+            i += 1
+
+    assert len(nt) == i
+    return nt
 
 
 def hypernym_of(synset1: Synset, synset2: Synset) -> bool:
@@ -130,65 +156,6 @@ def has_hypernym_relation(lemma: str, token: str) -> bool:
             if hypernym_of(token_syn, syn):
                 return True
     return False
-
-
-def parse_cit_or_cou(tokens: list[Token]) -> list[Token]:
-    """
-     TODO: FINISH THIS FUNCTION
-    Checks if a token is a city or country based on corenlp location
-    tag.
-
-    Takes a list because tokens can have mutiple words
-    """
-
-    # i = 0
-    # while i < len(tokens):
-
-    #     # Make sure only locations are used
-    #     if not tokens[i]['core_nlp_ent'] == 'LOCATION':
-    #         continue
-
-    #     token_str = tokens[i]['token']
-    #     j = i
-    #     while j < len(tokens) and tokens[j]['id_'] == tokens[i]['id_']+(j-i):
-    #         breakpoint()
-    #         token_str += ' ' + tokens[j]['token']
-    #         j += 1
-
-    #     print(token_str)
-    #     breakpoint()
-
-    #     i += 1
-
-    # for i, token in enumerate(tokens):
-    #     token_str = token['token']
-    #     # 12 - 1 -> 11
-
-    #     for j in range(i, len(tokens)):
-    #         print("I am here!")
-    #         breakpoint()
-    #         if tokens[i+j]['id_'] == token['id_'] + j:
-    #             token_str += ' ' + tokens[i+j]['token']
-    #             breakpoint()
-    #         else:
-    #             breakpoint()
-    #             break
-
-    #     breakpoint()
-    # TODO: Make so that it goes on until next id does not add up
-
-    # so i + n while not tokens[n][id]-n == token[id]
-    # if i+1 < len(tokens):
-    #     # Check if the two tokens come after each other (based on id)
-    #     if tokens[i+1]['id_']-1 == token['id_']:
-    #         # Combine the two tokens
-    #         token_str = token['token'] + ' ' + tokens[i+1]['token']
-
-    # is_city = has_hypernym_relation('city', token_str)
-    # is_cou = has_hypernym_relation('country', token_str)
-    # breakpoint()
-
-    return tokens
 
 
 def find_nouns(tokens: list[Token]) -> list[Token]:
@@ -260,13 +227,10 @@ def main() -> int:
     # Identity entities of interest (with category)
     # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
     if proc is not None:
-        tokens = corenlp_parse(tokens, url=f'http://localhost:{port}')
+        tokens = corenlp_parse_regexner(tokens, url=f'http://localhost:{port}')
         proc.terminate()
     else:
-        tokens = corenlp_parse(tokens, url=args.server)
-
-    # Check if LOCATION is CIT or COU
-    tokens = parse_cit_or_cou(tokens)
+        tokens = corenlp_parse_regexner(tokens, url=args.server)
 
     # Get animal NEs
     tokens = parse_animals(tokens)
