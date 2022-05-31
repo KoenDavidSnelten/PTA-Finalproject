@@ -20,6 +20,8 @@
 - [ ] `ENT`: Entertainment
   - ??
 
+TODO: Do the corenlp tagging the latest because it's the most accurate!
+
 # Server
 
 **Start the server with `regexner!`**

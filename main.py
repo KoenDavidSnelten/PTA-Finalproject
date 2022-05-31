@@ -48,6 +48,18 @@ def load_tokens(path: str) -> list[Token]:
 
     return tokens
 
+def write_outfile(path: str, tokens: list[Token]) -> int:
+
+
+    # TODO: Remove .test
+    with open(f'{path}.ent.test', 'a') as outfile:
+        for token in tokens:
+            line = f'{token["start_off"]} {token["end_off"]} {token["id_"]} {token["token"]} {token["pos"]} {token["entity"] or ""} {token["link"] or ""}'
+            line = line.strip()
+            outfile.write(line + '\n')
+
+    return 0
+
 
 def start_corenlp(
         server_properties: str = 'server.properties',
@@ -201,8 +213,17 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
 
 
 def find_ent(tokens: list[Token]) -> list[Token]:
+    """
+    Find entertainment entities based on their grammatical structure.
 
-    # best = n_most_likely_collocations_pmi(tokens)
+    ENT is found as a possible determiner followed by one or more proper nouns.
+
+    Note: this method finds a lot of false positives. Therefore it needs to
+    be applied before all other parsers so that all other entities that
+    are found are overwritten.
+
+    """
+
 
     inp = [(token['token'], token['pos']) for token in tokens]
     grammar = 'ENT: {<DT>?<NNP>+}'
@@ -293,9 +314,9 @@ def main() -> int:
     tokens = parse_sports(tokens)
 
     # TODO: Write output file
-    breakpoint()
+    ret = write_outfile(all_files_tokens[0][0], tokens)
 
-    return 0
+    return ret
 
 
 if __name__ == '__main__':
