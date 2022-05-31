@@ -1,21 +1,23 @@
 
 # Classes & How to find
 
-- `COU`: Country/state
+- [x] `COU`: Country/state
   - From corenlp `COUNTRY`
-- `CIT`: City
+- [x] `CIT`: City
   - From corenlp `CITY`
-- `NAT`: Natural places
+- [ ] `NAT`: Natural places
   - Using wordnet?
-- `PER`: Persons
+- [x]`PER`: Persons
   - From corenlp `PERSON`
-- `ORG`: Organization
+- [x] `ORG`: Organization
   - From corenlp `ORGANIZATION`
-- `ANI`: Animals
+- [ ] `ANI`: Animals
   - From wordnet
-- `SPO`: Sports
+  - Basics done, needs ngrams and fine-tuning
+- [ ] `SPO`: Sports
   - From wordnet
-- `ENT`: Entertainment
+  - Basics done, needs ngrams and fine-tuning
+- [ ] `ENT`: Entertainment
   - ??
 
 # Server

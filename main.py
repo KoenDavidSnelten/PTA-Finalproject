@@ -8,6 +8,7 @@ from typing import Optional
 from typing import TypedDict
 
 import requests
+from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -216,6 +217,25 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
     return parse(tokens, 'sport', 'SPO')
 
 
+def find_ent(tokens: list[Token]) -> list[Token]:
+
+    # best = n_most_likely_collocations_pmi(tokens)
+
+    inp = [(token['token'], token['pos']) for token in tokens]
+    grammar = 'ENT: {<DT>?<NNP>+}'
+    parser = RegexpParser(grammar)
+    ret = parser.parse(inp)
+
+    for subtree in ret:
+        for leave in subtree:
+            for token in tokens:
+                if leave[0] == token['token']:
+                    if token['pos'] in ('NNP', 'DT'):
+                        token['entity'] = 'ENT'
+
+    return tokens
+
+
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
     corenlp_tag_to_ent_cls: dict[str, Optional[str]] = {
@@ -264,6 +284,11 @@ def main() -> int:
     # XXX: Update me, this is for dev
     tokens = all_files_tokens[0][1]
 
+    # Find entertainment
+    # Note: also finds persons etc.. so needs to be the first one
+    # so that all other entity types will be overwritten.
+    tokens = find_ent(tokens)
+
     # Start corenlp server if needed
     port = 8123
     proc = None
@@ -279,7 +304,6 @@ def main() -> int:
         tokens = corenlp_parse_regexner(tokens, url=args.server)
 
     tokens = use_corenlp_tags(tokens)
-
     # Get animal NEs
     tokens = parse_animals(tokens)
     # Get sport NEs
