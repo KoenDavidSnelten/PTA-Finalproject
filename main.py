@@ -8,11 +8,11 @@ from typing import Optional
 from typing import TypedDict
 
 import requests
+from nltk import ngrams
 from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
-from nltk import ngrams
 
 
 class Token(TypedDict):
@@ -187,21 +187,28 @@ def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
             token['entity'] = ent_class
     return tokens
 
-def parse_ngrams(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
+
+def parse_ngrams(
+    tokens: list[Token],
+    lemma: str,
+    ent_class: str,
+) -> list[Token]:
 
     chunked_list = list()
     chunk_size = 2
-    
+
     for i in range(0, len(tokens), chunk_size):
         chunked_list.append(tokens[i:i+chunk_size])
-        
+
     n_value = 1
-    n_grams = ngrams(chunked_list , n_value)
+    n_grams = ngrams(chunked_list, n_value)
     for grams in n_grams:
         parse(grams, 'animal', 'ANI')
         print(grams)
         breakpoint()
-    
+
+    return tokens
+
 
 def parse_animals(tokens: list[Token]) -> list[Token]:
     """
@@ -212,7 +219,7 @@ def parse_animals(tokens: list[Token]) -> list[Token]:
     Todo:
         - Use ngrams?
     """
-   
+
     return parse(tokens, 'animal', 'ANI')
 
 
@@ -260,6 +267,9 @@ def find_ent(tokens: list[Token]) -> list[Token]:
             for token in tokens:
                 if leave[0] == token['token']:
                     if token['pos'] in ('NNP', 'DT'):
+                        # FIXME: Also finds 'a' and 'at'
+                        if token['pos'] != 'NPP' and len(leave) == 2:
+                            continue
                         token['entity'] = 'ENT'
 
     return tokens
