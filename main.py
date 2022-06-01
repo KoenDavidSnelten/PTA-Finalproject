@@ -48,13 +48,13 @@ def load_tokens(path: str) -> list[Token]:
 
     return tokens
 
-def write_outfile(path: str, tokens: list[Token]) -> int:
 
+def write_outfile(path: str, tokens: list[Token]) -> int:
 
     # TODO: Remove .test
     with open(f'{path}.ent.test', 'a') as outfile:
         for token in tokens:
-            line = f'{token["start_off"]} {token["end_off"]} {token["id_"]} {token["token"]} {token["pos"]} {token["entity"] or ""} {token["link"] or ""}'
+            line = f'{token["start_off"]} {token["end_off"]} {token["id_"]} {token["token"]} {token["pos"]} {token["entity"] or ""} {token["link"] or ""}'  # noqa: E501
             line = line.strip()
             outfile.write(line + '\n')
 
@@ -212,6 +212,15 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
     return parse(tokens, 'sport', 'SPO')
 
 
+def parse_natural_places(tokens: list[Token]) -> list[Token]:
+
+    nt = tokens
+    for option in ['ocean', 'river', 'mountain', 'land']:
+        nt = parse(nt, option, 'NAT')
+
+    return nt
+
+
 def find_ent(tokens: list[Token]) -> list[Token]:
     """
     Find entertainment entities based on their grammatical structure.
@@ -223,7 +232,6 @@ def find_ent(tokens: list[Token]) -> list[Token]:
     are found are overwritten.
 
     """
-
 
     inp = [(token['token'], token['pos']) for token in tokens]
     grammar = 'ENT: {<DT>?<NNP>+}'
@@ -263,6 +271,9 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
     for token in tokens:
         if token['core_nlp_ent'] is not None:
+            if token['core_nlp_ent'] == 'LOCATION':
+                # TODO: Check if city, cou, or nat!
+                pass
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
 
@@ -312,9 +323,13 @@ def main() -> int:
     tokens = parse_animals(tokens)
     # Get sport NEs
     tokens = parse_sports(tokens)
+    # Get natural places
+    tokens = parse_natural_places(tokens)
 
     # TODO: Write output file
-    ret = write_outfile(all_files_tokens[0][0], tokens)
+    breakpoint()
+    ret = 0
+    # ret = write_outfile(all_files_tokens[0][0], tokens)
 
     return ret
 
