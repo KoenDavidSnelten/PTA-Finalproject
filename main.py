@@ -8,6 +8,7 @@ from typing import Optional
 from typing import TypedDict
 
 import requests
+import wikipedia
 from nltk import ngrams
 from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
@@ -285,15 +286,23 @@ def find_ent(tokens: list[Token]) -> list[Token]:
 
     return tokens
 
+
 def parse_loc(tokens, token):
     words = [token['token'] for token in tokens]
     lesk_synset = lesk(words, token['token'], 'n')
-    if lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or hypernym_of(lesk_synset, wordnet.synset('state.n.01'))):
+    if lesk_synset and (
+            hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or
+            hypernym_of(lesk_synset, wordnet.synset('state.n.01'))
+    ):
         token['entity'] = 'COU'
-    elif lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or hypernym_of(lesk_synset, wordnet.synset('town.n.01'))):
+    elif lesk_synset and (
+        hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or
+        hypernym_of(lesk_synset, wordnet.synset('town.n.01'))
+    ):
         token['entity'] = 'CIT'
     else:
         token['entity'] = 'NAT'
+
 
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
@@ -306,7 +315,7 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         'STATE_OR_PROVINCE': 'COU',
         'COUNTRY': 'COU',
         'NATIONALITY': None,
-        'RELIGION': 'ORG',
+        'RELIGION': 'ORG',  # TODO: Check if it's really a org
         'TITLE': None,
         'IDEOLOGY': 'ORG',
         'CRIMINAL_CHARGE': None,
@@ -320,9 +329,61 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         if token['core_nlp_ent'] is not None:
             if token['core_nlp_ent'] == 'LOCATION':
                 parse_loc(tokens, token)
-                pass
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
+
+    return tokens
+
+
+def wikify(tokens: list[Token]) -> list[Token]:
+
+    ent_cls_to_wiki_keyword = {
+        'COU': ['country', 'state', 'province'],
+        'CIT': ['city'],
+        'NAT': ['mountain', 'river', 'ocean', 'forest', 'volcanoes'],
+        'PER': ['person', 'name'],
+        'ORG': ['organization'],
+        'ANI': ['animal'],
+        'SPO': ['sport'],
+        'ENT': ['book', 'magazine', 'film', 'song', 'concert', 'TV_Program'],
+    }
+
+    wikipedia.set_lang('en')
+
+    for i, token in enumerate(tokens):
+        if token['entity'] is not None:
+
+            # There was already a link found for the token
+            if token['link'] is not None:
+                continue
+
+            search_term = token['token']
+            j = i+1
+            while j < len(tokens):
+                if tokens[j]['entity'] == token['entity']:
+                    search_term += f' {tokens[j]["token"]}'
+                else:
+                    break
+                j += 1
+
+            page = None
+            try:
+                page = wikipedia.page(search_term)
+            except wikipedia.DisambiguationError as de:
+                options = de.options
+                for option in options:
+                    assert token['entity'] is not None
+                    for keyword in ent_cls_to_wiki_keyword[token['entity']]:
+                        if keyword in option:
+                            page = wikipedia.page(option)
+            except wikipedia.PageError:
+                # No possible pages are found
+                page = None
+
+            if page is not None:
+                token['link'] = page.url
+                for k in range(0, j-i):
+                    tokens[i+k]['link'] = page.url
 
     return tokens
 
@@ -372,6 +433,8 @@ def main() -> int:
     tokens = parse_sports(tokens)
     # Get natural places
     tokens = parse_natural_places(tokens)
+
+    tokens = wikify(tokens)
 
     # TODO: Write output file
     breakpoint()
