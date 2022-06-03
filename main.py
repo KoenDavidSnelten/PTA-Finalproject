@@ -285,10 +285,10 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         'CITY': 'CIT',
         'STATE_OR_PROVINCE': 'COU',
         'COUNTRY': 'COU',
-        'NATIONALITY': None,  # TODO: Count as country?
-        'RELIGION': None,  # TODO: Count as ORG, ...?
+        'NATIONALITY': None,
+        'RELIGION': 'ORG',
         'TITLE': None,
-        'IDEOLOGY': None,  # TODO: ORG?
+        'IDEOLOGY': 'ORG',
         'CRIMINAL_CHARGE': None,
         'CAUSE_OF_DEATH': None,
         'HANDLE': None,
