@@ -14,6 +14,8 @@ from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
 
+import wikipedia
+
 
 class Token(TypedDict):
     start_off: int              # The start (character) offset of the token
@@ -286,7 +288,7 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         'STATE_OR_PROVINCE': 'COU',
         'COUNTRY': 'COU',
         'NATIONALITY': None,
-        'RELIGION': 'ORG',
+        'RELIGION': 'ORG', # TODO: Check if it's really a org
         'TITLE': None,
         'IDEOLOGY': 'ORG',
         'CRIMINAL_CHARGE': None,
@@ -304,6 +306,24 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
 
+    return tokens
+
+
+def wikify(tokens: list[Token]) -> list[Token]:
+
+    for token in tokens:
+        if token['entity'] is not None:
+            # XXX HACK
+            if len(token['token']) < 3:
+                continue
+
+            page = None
+            try:
+                page = wikipedia.page(token['token'])
+            except wikipedia.DisambiguationError as de:
+                options = de.options
+                breakpoint()
+                pass
     return tokens
 
 
@@ -352,6 +372,8 @@ def main() -> int:
     tokens = parse_sports(tokens)
     # Get natural places
     tokens = parse_natural_places(tokens)
+
+    tokens = wikify(tokens)
 
     # TODO: Write output file
     breakpoint()
