@@ -320,6 +320,14 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
 def wikify(tokens: list[Token]) -> list[Token]:
 
+    ent_cls_to_keyword = {
+        'COU': ['country', 'state', 'province'],
+        'CIT': ['city'],
+    }
+
+
+    wikipedia.set_lang('en')
+
     for token in tokens:
         if token['entity'] is not None:
             # XXX HACK
@@ -331,8 +339,15 @@ def wikify(tokens: list[Token]) -> list[Token]:
                 page = wikipedia.page(token['token'])
             except wikipedia.DisambiguationError as de:
                 options = de.options
-                breakpoint()
-                pass
+                for option in options:
+                    assert token['entity'] is not None
+                    for keyword in ent_cls_to_keyword[token['entity']]:
+                        if keyword in option:
+                            page = wikipedia.page(option)
+
+            if page is not None:
+                token['link'] = page.url
+
     return tokens
 
 
