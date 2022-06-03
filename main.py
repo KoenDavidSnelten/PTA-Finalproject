@@ -257,6 +257,7 @@ def parse_natural_places(tokens: list[Token]) -> list[Token]:
     return nt
 
 
+# TODO: Rename??
 def find_ent(tokens: list[Token]) -> list[Token]:
     """
     Find entertainment entities based on their grammatical structure.
@@ -287,21 +288,21 @@ def find_ent(tokens: list[Token]) -> list[Token]:
     return tokens
 
 
-def parse_loc(tokens, token):
+def parse_loc(tokens: list[Token], token: Token) -> str:
     words = [token['token'] for token in tokens]
     lesk_synset = lesk(words, token['token'], 'n')
     if lesk_synset and (
             hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or
             hypernym_of(lesk_synset, wordnet.synset('state.n.01'))
     ):
-        token['entity'] = 'COU'
+        return 'COU'
     elif lesk_synset and (
         hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or
         hypernym_of(lesk_synset, wordnet.synset('town.n.01'))
     ):
-        token['entity'] = 'CIT'
+        return 'CIT'
     else:
-        token['entity'] = 'NAT'
+        return 'NAT'
 
 
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
@@ -328,7 +329,8 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
     for token in tokens:
         if token['core_nlp_ent'] is not None:
             if token['core_nlp_ent'] == 'LOCATION':
-                parse_loc(tokens, token)
+                breakpoint()
+                token['entity'] = parse_loc(tokens, token)
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
 
