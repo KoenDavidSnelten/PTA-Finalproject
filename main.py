@@ -320,11 +320,16 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
 def wikify(tokens: list[Token]) -> list[Token]:
 
-    ent_cls_to_keyword = {
+    ent_cls_to_wiki_keyword = {
         'COU': ['country', 'state', 'province'],
         'CIT': ['city'],
+        'NAT': ['mountain', 'river', 'ocean', 'forest', 'volcanoes'],
+        'PER': ['person', 'name'],
+        'ORG': ['organization'],
+        'ANI': ['animal'],
+        'SPO': ['sport'],
+        'ENT': ['book', 'magazine', 'film', 'song', 'concert', 'TV_Program'],
     }
-
 
     wikipedia.set_lang('en')
 
@@ -341,7 +346,7 @@ def wikify(tokens: list[Token]) -> list[Token]:
                 options = de.options
                 for option in options:
                     assert token['entity'] is not None
-                    for keyword in ent_cls_to_keyword[token['entity']]:
+                    for keyword in ent_cls_to_wiki_keyword[token['entity']]:
                         if keyword in option:
                             page = wikipedia.page(option)
 
