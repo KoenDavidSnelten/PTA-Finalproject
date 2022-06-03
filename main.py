@@ -309,7 +309,6 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
     for token in tokens:
         if token['core_nlp_ent'] is not None:
             if token['core_nlp_ent'] == 'LOCATION':
-                # TODO: Check if city, cou, or nat!
                 parse_loc(tokens, token)
                 pass
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
