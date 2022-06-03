@@ -210,6 +210,13 @@ def parse_ngrams(
 
     return tokens
 
+def parse_lesk_synset(tokens, entity, synset):
+    words = [token['token'] for token in tokens]
+    for token in tokens:
+        lesk_synset = lesk(words, token['token'], 'n')
+        if lesk_synset and hypernym_of(lesk_synset, wordnet.synset(synset)):
+            token['entity'] = entity
+    return tokens
 
 def parse_animals(tokens: list[Token]) -> list[Token]:
     """
@@ -220,8 +227,10 @@ def parse_animals(tokens: list[Token]) -> list[Token]:
     Todo:
         - Use ngrams?
     """
+    tokens = parse_lesk_synset(tokens, 'ANI', 'animal.n.01')
+    tokens = parse(tokens, 'animal', 'ANI')
+    return tokens
 
-    return parse(tokens, 'animal', 'ANI')
 
 
 def parse_sports(tokens: list[Token]) -> list[Token]:
@@ -233,8 +242,9 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
             - This word is not known in the wordnet database
 
     """
-
-    return parse(tokens, 'sport', 'SPO')
+    tokens = parse_lesk_synset(tokens, 'SPO', 'sport.n.01')
+    tokens = parse(tokens, 'sport', 'SPO')
+    return tokens
 
 
 def parse_natural_places(tokens: list[Token]) -> list[Token]:
@@ -279,11 +289,11 @@ def parse_loc(tokens, token):
     words = [token['token'] for token in tokens]
     lesk_synset = lesk(words, token['token'], 'n')
     if lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or hypernym_of(lesk_synset, wordnet.synset('state.n.01'))):
-        token['entity'] = ' COU'
+        token['entity'] = 'COU'
     elif lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or hypernym_of(lesk_synset, wordnet.synset('town.n.01'))):
-        token['entity'] = ' CIT'
+        token['entity'] = 'CIT'
     else:
-        token['entity'] = ' NAT'
+        token['entity'] = 'NAT'
 
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
@@ -315,9 +325,6 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
 
     return tokens
-
-
-
 
 
 def main() -> int:
