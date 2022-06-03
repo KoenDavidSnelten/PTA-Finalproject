@@ -13,6 +13,7 @@ from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.wsd import lesk
 
 
 class Token(TypedDict):
@@ -274,6 +275,15 @@ def find_ent(tokens: list[Token]) -> list[Token]:
 
     return tokens
 
+def parse_loc(tokens, token):
+    words = [token['token'] for token in tokens]
+    lesk_synset = lesk(words, token['token'], 'n')
+    if lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or hypernym_of(lesk_synset, wordnet.synset('state.n.01'))):
+        token['entity'] = ' COU'
+    elif lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or hypernym_of(lesk_synset, wordnet.synset('town.n.01'))):
+        token['entity'] = ' CIT'
+    else:
+        token['entity'] = ' NAT'
 
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
@@ -300,11 +310,15 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         if token['core_nlp_ent'] is not None:
             if token['core_nlp_ent'] == 'LOCATION':
                 # TODO: Check if city, cou, or nat!
+                parse_loc(tokens, token)
                 pass
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
 
     return tokens
+
+
+
 
 
 def main() -> int:
