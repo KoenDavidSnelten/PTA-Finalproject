@@ -333,15 +333,36 @@ def wikify(tokens: list[Token]) -> list[Token]:
 
     wikipedia.set_lang('en')
 
-    for token in tokens:
+    nt = tokens
+    for i, token in enumerate(tokens):
         if token['entity'] is not None:
-            # XXX HACK
-            if len(token['token']) < 3:
+
+            # There was already a link found for the token
+            if token['link'] is not None:
                 continue
+
+            # TODO: Make this go until next token has not the same ent
+            # if i+1 < len(tokens):
+            #     if tokens[i+1]['entity'] == token['entity']:
+            #     search_term += f' {tokens[i+1]["token"]}'
+
+            search_term = token['token']
+            j = i+1
+            while j < len(tokens):
+                if tokens[j]['entity'] == token['entity']:
+                    breakpoint()
+                    search_term += f' {tokens[j]["token"]}'
+                else:
+                    break
+                j += 1
+
+            # # XXX HACK
+            # if len(token['token']) < 3:
+            #     continue
 
             page = None
             try:
-                page = wikipedia.page(token['token'])
+                page = wikipedia.page(search_term)
             except wikipedia.DisambiguationError as de:
                 options = de.options
                 for option in options:
@@ -349,9 +370,14 @@ def wikify(tokens: list[Token]) -> list[Token]:
                     for keyword in ent_cls_to_wiki_keyword[token['entity']]:
                         if keyword in option:
                             page = wikipedia.page(option)
+            except wikipedia.PageError:
+                # No possible pages are found
+                page = None
 
             if page is not None:
                 token['link'] = page.url
+                for k in range(0, j-i):
+                    tokens[i+k]['link'] = page.url
 
     return tokens
 
