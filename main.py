@@ -6,6 +6,7 @@ import sys
 import time
 from typing import Optional
 from typing import TypedDict
+from typing import Union
 
 import requests
 import wikipedia
@@ -211,6 +212,7 @@ def parse_ngrams(
 
     return tokens
 
+
 def parse_lesk_synset(tokens, entity, synset):
     words = [token['token'] for token in tokens]
     for token in tokens:
@@ -218,6 +220,7 @@ def parse_lesk_synset(tokens, entity, synset):
         if lesk_synset and hypernym_of(lesk_synset, wordnet.synset(synset)):
             token['entity'] = entity
     return tokens
+
 
 def parse_animals(tokens: list[Token]) -> list[Token]:
     """
@@ -231,7 +234,6 @@ def parse_animals(tokens: list[Token]) -> list[Token]:
     tokens = parse_lesk_synset(tokens, 'ANI', 'animal.n.01')
     tokens = parse(tokens, 'animal', 'ANI')
     return tokens
-
 
 
 def parse_sports(tokens: list[Token]) -> list[Token]:
@@ -329,7 +331,6 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
     for token in tokens:
         if token['core_nlp_ent'] is not None:
             if token['core_nlp_ent'] == 'LOCATION':
-                breakpoint()
                 token['entity'] = parse_loc(tokens, token)
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
@@ -337,7 +338,7 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
     return tokens
 
 
-def wikify(tokens: list[Token]) -> list[Token]:
+def create_wiki_links(tokens: list[Token]) -> list[Token]:
 
     ent_cls_to_wiki_keyword = {
         'COU': ['country', 'state', 'province'],
@@ -383,6 +384,8 @@ def wikify(tokens: list[Token]) -> list[Token]:
                 page = None
 
             if page is not None:
+                # FIXME: in 0170 the first word of 3word PER is skipped
+                # when adding the link
                 token['link'] = page.url
                 for k in range(0, j-i):
                     tokens[i+k]['link'] = page.url
@@ -390,43 +393,31 @@ def wikify(tokens: list[Token]) -> list[Token]:
     return tokens
 
 
-def main() -> int:
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('filenames', nargs='+')
-    parser.add_argument(
-        '--server', help='If you have a corenlp server running use this. '
-        'Format: http://host:port',
-    )
-    args = parser.parse_args()
-
-    all_files_tokens: list[tuple[str, list[Token]]] = []
-    for filename in args.filenames:
-
-        tokens = load_tokens(filename)
-        all_files_tokens.append((filename, tokens))
-
-    # XXX: Update me, this is for dev
-    tokens = all_files_tokens[0][1]
+def wikify(
+    tokens: list[Token],
+    *,
+    corenlp_proc: Optional[subprocess.Popen[bytes]] = None,
+    url: Optional[Union[str, int]] = None,
+) -> list[Token]:
+    """
+    Note: `url` is used for both port and the actual server URL depending on
+    if corenlp_proc is given.
+    """
 
     # Find entertainment
     # Note: also finds persons etc.. so needs to be the first one
     # so that all other entity types will be overwritten.
     tokens = find_ent(tokens)
 
-    # Start corenlp server if needed
-    port = 8123
-    proc = None
-    if not args.server:
-        proc = start_corenlp(port=port)
-
     # Identity entities of interest (with category)
     # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
-    if proc is not None:
-        tokens = corenlp_parse_regexner(tokens, url=f'http://localhost:{port}')
-        proc.terminate()
+    if corenlp_proc is not None:
+        tokens = corenlp_parse_regexner(tokens, url=f'http://localhost:{url}')
+        corenlp_proc.terminate()
     else:
-        tokens = corenlp_parse_regexner(tokens, url=args.server)
+        assert url is not None
+        assert isinstance(url, str)
+        tokens = corenlp_parse_regexner(tokens, url=url)
 
     tokens = use_corenlp_tags(tokens)
     # Get animal NEs
@@ -436,12 +427,57 @@ def main() -> int:
     # Get natural places
     tokens = parse_natural_places(tokens)
 
-    tokens = wikify(tokens)
+    # Create the links to the wikipedia page
+    tokens = create_wiki_links(tokens)
 
-    # TODO: Write output file
-    breakpoint()
+    return tokens
+
+
+def main() -> int:
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'inpath',
+        nargs='+',
+        help='The file(s) or directorie(s), containing the files'
+        'you want to process.',
+    )
+    parser.add_argument(
+        '--server', help='If you have a corenlp server running use this. '
+        'Format: http://host:port',
+    )
+    args = parser.parse_args()
+
+    if os.path.isdir(args.inpath[0]):
+        # Load all the files with the correct name from the folders
+        filenames = []
+        for dirpath, _, files in os.walk(args.inpath[0]):
+            for name in files:
+                if name == 'en.tok.off.pos':
+                    filenames.append(os.path.join(dirpath, name))
+    else:
+        filenames = args.inpath
+
+    all_files_tokens: list[tuple[str, list[Token]]] = []
+    for filename in filenames:
+
+        tokens = load_tokens(filename)
+        all_files_tokens.append((filename, tokens))
+
+    # Start corenlp server if needed
+    port = 8123
+    proc = None
+    if not args.server:
+        proc = start_corenlp(port=port)
+
     ret = 0
-    # ret = write_outfile(all_files_tokens[0][0], tokens)
+    server_url: Optional[str] = args.server
+    for filename, tokens in all_files_tokens:
+        tokens = wikify(
+            tokens, corenlp_proc=proc,
+            url=server_url or port,
+        )
+        ret |= write_outfile(filename, tokens)
 
     return ret
 
