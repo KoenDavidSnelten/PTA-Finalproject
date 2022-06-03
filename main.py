@@ -8,14 +8,13 @@ from typing import Optional
 from typing import TypedDict
 
 import requests
+import wikipedia
 from nltk import ngrams
 from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.wsd import lesk
-
-import wikipedia
 
 
 class Token(TypedDict):
@@ -277,15 +276,23 @@ def find_ent(tokens: list[Token]) -> list[Token]:
 
     return tokens
 
+
 def parse_loc(tokens, token):
     words = [token['token'] for token in tokens]
     lesk_synset = lesk(words, token['token'], 'n')
-    if lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or hypernym_of(lesk_synset, wordnet.synset('state.n.01'))):
+    if lesk_synset and (
+            hypernym_of(lesk_synset, wordnet.synset('country.n.02')) or
+            hypernym_of(lesk_synset, wordnet.synset('state.n.01'))
+    ):
         token['entity'] = ' COU'
-    elif lesk_synset and (hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or hypernym_of(lesk_synset, wordnet.synset('town.n.01'))):
+    elif lesk_synset and (
+        hypernym_of(lesk_synset, wordnet.synset('city.n.01')) or
+        hypernym_of(lesk_synset, wordnet.synset('town.n.01'))
+    ):
         token['entity'] = ' CIT'
     else:
         token['entity'] = ' NAT'
+
 
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
@@ -298,7 +305,7 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         'STATE_OR_PROVINCE': 'COU',
         'COUNTRY': 'COU',
         'NATIONALITY': None,
-        'RELIGION': 'ORG', # TODO: Check if it's really a org
+        'RELIGION': 'ORG',  # TODO: Check if it's really a org
         'TITLE': None,
         'IDEOLOGY': 'ORG',
         'CRIMINAL_CHARGE': None,
@@ -333,7 +340,6 @@ def wikify(tokens: list[Token]) -> list[Token]:
 
     wikipedia.set_lang('en')
 
-    nt = tokens
     for i, token in enumerate(tokens):
         if token['entity'] is not None:
 
@@ -341,24 +347,14 @@ def wikify(tokens: list[Token]) -> list[Token]:
             if token['link'] is not None:
                 continue
 
-            # TODO: Make this go until next token has not the same ent
-            # if i+1 < len(tokens):
-            #     if tokens[i+1]['entity'] == token['entity']:
-            #     search_term += f' {tokens[i+1]["token"]}'
-
             search_term = token['token']
             j = i+1
             while j < len(tokens):
                 if tokens[j]['entity'] == token['entity']:
-                    breakpoint()
                     search_term += f' {tokens[j]["token"]}'
                 else:
                     break
                 j += 1
-
-            # # XXX HACK
-            # if len(token['token']) < 3:
-            #     continue
 
             page = None
             try:
