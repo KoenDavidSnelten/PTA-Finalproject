@@ -2,6 +2,8 @@
 
 {% block content %}
     <div class="row shadow p-3 mb-5 bg-white rounded">
+        <h1>Text Upload</h1>
+        <p>Please fill in your text.</p>
         <form action='{{ url_for("wikifier.wikify") }}' method='POST' class='mt-3'>
             {% if error %}
                 <div class="alert alert-danger" role="alert">
@@ -9,7 +11,6 @@
                 </div>
             {% endif %}
             <div class="form-input">
-                <label for="tekst">Tekst</label>
                 {% if form_data|length != 0 %}
                     <textarea class="form-control" placeholder="Your text" id="text" name='text' rows="15">
                         {{form_data.text}}
@@ -20,7 +21,24 @@
                 {% endif %}
             </div>
             <div class='input-group mt-2'>
-                <button type="submit" class='btn btn-primary'>Wikify the text</button>
+                <button type="submit" class='btn btn-primary'>Wikify the text!</button>
+            </div>
+        </form>
+    </div>
+    <div class="row shadow p-3 mb-5 bg-white rounded">
+        <h1>File Upload</h1>
+        <p>Please only fill in an en.tok.off.pos file.</p>
+        <form method="POST" action="{{ url_for('wikifier.wikify_file') }}" class="mt-03">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            {% endif %}
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFile" accept=".pos">
+            </div>
+            <div class='input-group mt-2'>
+                <button type="submit" class='btn btn-primary'>Wikify the file!</button>
             </div>
         </form>
     </div>
