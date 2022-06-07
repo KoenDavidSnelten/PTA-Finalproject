@@ -4,9 +4,15 @@
 
   <div class="row">
     <div class="col-md-12">
-      <p style='white-space: pre-wrap' id="text">
-        {{text}}
-      </p>
+      <div style='white-space: pre-wrap' id="text">
+        {% for token in tokens %}
+            {%-if token['link'] != None-%}
+                <a href="{{token['link']}}">{{token['token']}} </a>
+            {%-else-%}
+                {{token['token']}}<span> </span>
+            {%-endif-%}
+        {% endfor %}
+      </div>
     </div>
   </div>
 
