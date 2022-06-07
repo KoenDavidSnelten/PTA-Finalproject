@@ -2,7 +2,11 @@ from flask import Blueprint
 from flask import render_template
 from flask import request
 
-#from server.core import long_sent_finder
+from nltk import word_tokenize
+from nltk import pos_tag
+
+from server.core.wikify import Token
+from server.core.wikify import wikify as core_wikify
 
 bp = Blueprint('wikifier', __name__, url_prefix='/wikifier')
 
@@ -38,6 +42,27 @@ def wikify():
             'wikifier/wikify.html',
             error='Voer een geldige tekst in!',
         )
+
+    word_tokens = word_tokenize(text)
+    pos_tags = pos_tag(word_tokens)
+
+    tokens = []
+    for token, pos in zip(word_tokens, pos_tags):
+        nt = Token(
+            start_off=0,
+            end_off=0,
+            id_=0,
+            token=token,
+            pos=pos[1],
+            entity=None,
+            link=None,
+            core_nlp_ent=None,
+        )
+        tokens.append(nt)
+
+    wikified_tokens = core_wikify(tokens, url='http://localhost:8126')
+
+    # TODO: Add inline links for all tokens that have links!
 
     return render_template(
         'wikifier/index.html',
