@@ -45,7 +45,6 @@ def start_corenlp(
         '-cp',
         cwd + '/*',
         'edu.stanford.nlp.pipeline.StanfordCoreNLPServer',
-        # 'edu.stanford.nlp.pipeline.stanfordcorenlpserver',
         '-preload', 'tokenize,ssplit,pos,lemma,ner,regexner,depparse',
         '-start_port', str(port),
         '-port', str(port),

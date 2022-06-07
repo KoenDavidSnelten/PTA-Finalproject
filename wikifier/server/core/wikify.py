@@ -172,6 +172,7 @@ def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
 
 
 def parse_lesk_synset(tokens, entity, synset):
+    """Parse the tokens for a specific synset."""
     words = [token['token'] for token in tokens]
     for token in tokens:
         lesk_synset = lesk(words, token['token'], 'n')
@@ -181,32 +182,21 @@ def parse_lesk_synset(tokens, entity, synset):
 
 
 def parse_animals(tokens: list[Token]) -> list[Token]:
-    """
-    Errors:
-        - Classifies 'Afgan' as animal (d0208)
-        - Classifies 'humans' as animal (d0208)
-
-    """
+    """Parse the tokens to find animals."""
     tokens = parse_lesk_synset(tokens, 'ANI', 'animal.n.01')
     tokens = parse(tokens, 'animal', 'ANI')
     return tokens
 
 
 def parse_sports(tokens: list[Token]) -> list[Token]:
-    """
-
-    Errors:
-        - Misses Chariot Racing
-        - Misses heptathlon
-            - This word is not known in the wordnet database
-
-    """
+    """Parse the tokens for sports."""
     tokens = parse_lesk_synset(tokens, 'SPO', 'sport.n.01')
     tokens = parse(tokens, 'sport', 'SPO')
     return tokens
 
 
 def parse_natural_places(tokens: list[Token]) -> list[Token]:
+    """Parse the tokens for natural places."""
 
     nt = tokens
     for option in ['ocean', 'river', 'mountain', 'land']:
@@ -219,6 +209,7 @@ def parse_natural_places(tokens: list[Token]) -> list[Token]:
 
 
 def parse_location(tokens: list[Token], token: Token) -> str:
+    """Check wethera token is a location."""
     words = [token['token'] for token in tokens]
     lesk_synset = lesk(words, token['token'], 'n')
     if lesk_synset and (
@@ -236,6 +227,7 @@ def parse_location(tokens: list[Token], token: Token) -> str:
 
 
 def use_spacy_tags(tokens: list[Token]) -> list[Token]:
+    """Convert the spacy NE tags to the tags we use."""
 
     spacy_tag_to_ent_cls: dict[str, Optional[str]] = {
         'CARDINAL': None,
@@ -273,6 +265,7 @@ def use_spacy_tags(tokens: list[Token]) -> list[Token]:
 
 
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
+    """Convert the corenlp NE tags to the tags we use."""
 
     corenlp_tag_to_ent_cls: dict[str, Optional[str]] = {
         'CAUSE_OF_DEATH': None,
@@ -303,6 +296,7 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
 
 def create_wiki_links(tokens: list[Token]) -> list[Token]:
+    """Find/create the links to the wikipedia page for the entities."""
 
     ent_cls_to_wiki_keyword = {
         'COU': ['country', 'state', 'province'],
@@ -372,13 +366,8 @@ def wikify(
     corenlp_proc: Optional[subprocess.Popen[bytes]] = None,
     url: Optional[Union[str, int]] = None,
 ) -> list[Token]:
-    """
-    Note: `url` is used for both port and the actual server URL depending on
-    if corenlp_proc is given.
-    """
+    """Wikify the given tokens."""
 
-    # Identity entities of interest (with category)
-    # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
     if corenlp_proc is not None:
         tokens = corenlp_parse_regexner(tokens, url=f'http://localhost:{url}')
         corenlp_proc.terminate()
