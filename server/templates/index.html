@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Hoi!!!!!!!!!!!!!!</h1>
-    <a href="{{ url_for('wikifier.index') }}">hoi</a>
+    <div class="row shadow p-3 mb-5 bg-white rounded">
+        <h1>Wikifiër</h1>
+        <h4>Made by: Twan Huiskend, Mike Doornewaard and Koen Snelten</h4>
+    </div>
+    <div class="row shadow p-3 mb-5 bg-white rounded">
+        <h2>Project Text Analysis - Final Project Wikification</h2>
+        <div height="200px" id="image-wiki-logo"></div>
+        <p>This Wikifiër can be used with the project files or a filled in text at this Flask based website.</p>
+        <a class="btn btn-primary" href="{{ url_for('wikifier.index') }}">Go to the wikifiër!</a>
+    </div>
+    
 {% endblock %}

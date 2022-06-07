@@ -1,0 +1,7 @@
+#image-wiki-logo {
+    height: 20em;
+    background-size: contain;
+    background-repeat: repeat;
+    background-position: center;
+    background-image: url("../images/Wikipedia_logo_svg.svg");
+}
