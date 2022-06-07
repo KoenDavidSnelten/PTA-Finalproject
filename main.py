@@ -9,13 +9,14 @@ from typing import TypedDict
 from typing import Union
 
 import requests
+import spacy
 import wikipedia
 from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
-from nltk.wsd import lesk
 from nltk.tree import Tree
+from nltk.wsd import lesk
 
 
 class Token(TypedDict):
@@ -26,6 +27,7 @@ class Token(TypedDict):
     pos: str                     # The part of speech of the token
     entity: Optional[str]        # The type of entity (ORG, NAT) or None
     core_nlp_ent: Optional[str]  # The type of entity given by corenlp
+    spacy_ent: Optional[str]       # The type of entity given by spacy
     link: Optional[str]          # The link to wikipedia
 
 
@@ -47,6 +49,7 @@ def load_tokens(path: str) -> list[Token]:
             entity=None,
             link=None,
             core_nlp_ent=None,
+            spacy_ent=None,
         )
         tokens.append(nt)
 
@@ -98,6 +101,25 @@ def start_corenlp(
     )
     time.sleep(timeout)
     return proc
+
+
+def spacy_tagger(tokens: list[Token]) -> list[Token]:
+
+    words = [token['token'] for token in tokens]
+    data = ' '.join(words)
+
+    nlp = spacy.load('en_core_web_sm')
+    doc = nlp(data)
+
+    for ent in doc.ents:
+        if ent.label_ is not None:
+            ent_words = ent.text.split()
+            for ent_word in ent_words:
+                for token in tokens:
+                    if token['token'] == ent_word:
+                        token['spacy_ent'] = ent.label_
+
+    return tokens
 
 
 def corenlp_parse_regexner(tokens: list[Token], *, url: str) -> list[Token]:
@@ -258,14 +280,13 @@ def parse_entertainment(tokens: list[Token]) -> list[Token]:
     inp = [(token['token'], token['pos']) for token in tokens]
     grammar = 'ENT: {<DT>+<NNP|NNPS>+}'
     parser = RegexpParser(grammar)
-    ret: list[Tree] = parser.parse(inp) # type: ignore
+    ret: list[Tree] = parser.parse(inp)  # type: ignore
 
     for subtree in ret:
         if isinstance(subtree, tuple):
             continue
         if subtree.label() == 'ENT':
             items = tuple(subtree)
-            breakpoint()
             if len(items) == 1:
                 continue
 
@@ -293,24 +314,61 @@ def parse_location(tokens: list[Token], token: Token) -> str:
         return 'NAT'
 
 
+def use_spacy_tags(tokens: list[Token]) -> list[Token]:
+
+    spacy_tag_to_ent_cls: dict[str, Optional[str]] = {
+        'CARDINAL': None,
+        'DATE': None,
+        'EVENT': 'ENT',
+        'FAC': None,
+        'GPE': 'COU',
+        'LANGUAGE': None,
+        'LAW': None,
+        'LOC': 'NAT',
+        'MONEY': None,
+        'NORP': None,
+        'ORG': 'ORG',
+        'ORIDNAL': None,
+        'PERCENT': None,
+        'PERSON': 'PER',
+        'PRODUCT': None,
+        'QUANTITY': None,
+        'TIME': None,
+        'WORK_OF_ART': 'ENT',
+    }
+
+    for token in tokens:
+        # Filter out common spacy mistakes
+        if token['token'] in ('\'s', 'The', 'the', "''"):
+            continue
+
+        if token['spacy_ent'] is not None:
+            if token['spacy_ent'] == 'GPE':
+                token['entity'] = parse_location(tokens, token)
+            if spacy_tag_to_ent_cls[token['spacy_ent']] is not None:
+                token['entity'] = spacy_tag_to_ent_cls[token['spacy_ent']]
+
+    return tokens
+
+
 def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
 
     corenlp_tag_to_ent_cls: dict[str, Optional[str]] = {
-        'PERSON': 'PER',
-        'ORGANIZATION': 'ORG',
-        'EMAIL': None,
-        'URL': None,
-        'CITY': 'CIT',
-        'STATE_OR_PROVINCE': 'COU',
-        'COUNTRY': 'COU',
-        'NATIONALITY': None,
-        'RELIGION': 'ORG',
-        'TITLE': None,
-        'IDEOLOGY': 'ORG',
-        'CRIMINAL_CHARGE': None,
         'CAUSE_OF_DEATH': None,
+        'CITY': 'CIT',
+        'COUNTRY': 'COU',
+        'CRIMINAL_CHARGE': None,
+        'EMAIL': None,
         'HANDLE': None,
+        'IDEOLOGY': 'ORG',
         'LOCATION': 'COU',
+        'NATIONALITY': None,
+        'ORGANIZATION': 'ORG',
+        'PERSON': 'PER',
+        'RELIGION': 'ORG',
+        'STATE_OR_PROVINCE': 'COU',
+        'TITLE': None,
+        'URL': None,
     }
 
     for token in tokens:
@@ -369,9 +427,18 @@ def create_wiki_links(tokens: list[Token]) -> list[Token]:
                 page = None
 
             if page is not None:
-                # FIXME: in 0170 the first word of 3word PER is skipped
-                # when adding the link
-                token['link'] = page.url
+
+                # Sometimes the Wikipedia search does not find
+                # a page when using the full search term. So
+                # when this appends the first token(s) might not get their
+                # actual link. If the previous token has the same entity
+                # class as the current token it gets assigned the found
+                # link as well.
+                if i != 0:
+                    if tokens[i-1]['entity'] == token['entity']:
+                        tokens[i-1]['link'] = page.url
+
+                tokens[i]['link'] = page.url
                 for k in range(0, j-i):
                     tokens[i+k]['link'] = page.url
 
@@ -392,7 +459,7 @@ def wikify(
     # Find entertainment
     # Note: also finds persons etc.. so needs to be the first one
     # so that all other entity types will be overwritten.
-    tokens = parse_entertainment(tokens)
+    # tokens = parse_entertainment(tokens)
 
     # Identity entities of interest (with category)
     # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
@@ -404,14 +471,17 @@ def wikify(
         assert isinstance(url, str)
         tokens = corenlp_parse_regexner(tokens, url=url)
 
-    tokens = use_corenlp_tags(tokens)
     # Get animal NEs
     tokens = parse_animals(tokens)
     # Get sport NEs
     tokens = parse_sports(tokens)
     # Get natural places
     tokens = parse_natural_places(tokens)
-
+    # Tag using spacy
+    tokens = spacy_tagger(tokens)
+    tokens = use_spacy_tags(tokens)
+    # Convert the corenlp tags to entities
+    tokens = use_corenlp_tags(tokens)
     # Create the links to the wikipedia page
     tokens = create_wiki_links(tokens)
 

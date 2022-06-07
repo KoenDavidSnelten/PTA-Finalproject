@@ -57,6 +57,7 @@ def wikify():
             entity=None,
             link=None,
             core_nlp_ent=None,
+            spacy_ent=None,
         )
         tokens.append(nt)
 
