@@ -20,15 +20,15 @@ from nltk.wsd import lesk
 
 
 class Token(TypedDict):
-    start_off: int               # The start (character) offset of the token
-    end_off: int                 # The end (character) offset of the token
-    id_: int                     # The id of the token
-    token: str                   # The token (word) itself
-    pos: str                     # The part of speech of the token
-    entity: Optional[str]        # The type of entity (ORG, NAT) or None
-    core_nlp_ent: Optional[str]  # The type of entity given by corenlp
-    spacy_ent: Optional[str]       # The type of entity given by spacy
-    link: Optional[str]          # The link to Wikipedia
+    start_off: int              # The start (character) offset of the token
+    end_off: int                # The end (character) offset of the token
+    id_: int                    # The id of the token
+    token: str                  # The token (word) itself
+    pos: str                    # The part of speech of the token
+    entity: Optional[str]       # The type of entity (ORG, NAT) or None
+    core_nlp_ent: Optional[str] # The type of entity given by corenlp
+    spacy_ent: Optional[str]    # The type of entity given by spacy
+    link: Optional[str]         # The link to Wikipedia
 
 
 def load_tokens(path: str) -> list[Token]:
@@ -58,57 +58,6 @@ def load_tokens(path: str) -> list[Token]:
         tokens.append(nt)
 
     return tokens
-
-
-def write_outfile(path: str, tokens: list[Token]) -> int:
-    """Writes the given tokens to the output file (path)."""
-
-    try:
-        with open(f'{path}.ent', 'a') as outfile:
-            for token in tokens:
-                line = f'{token["start_off"]} {token["end_off"]} {token["id_"]} {token["token"]} {token["pos"]} {token["entity"] or ""} {token["link"] or ""}'  # noqa: E501
-                line = line.strip()
-                outfile.write(line + '\n')
-    except IOError as e:
-        print(f'Could not write to: {path}. Error: {e}', file=sys.stderr)
-        return 1
-
-    return 0
-
-
-def start_corenlp(
-        server_properties: str = 'server.properties',
-        port: int = 9000,
-        timeout: int = 25,
-) -> subprocess.Popen[bytes]:
-    """Start the corenlp server with the given port and server properties."""
-
-    cwd = os.path.join(os.path.dirname(__file__), 'corenlp')
-
-    args = [
-        'java',
-        '-mx4g',
-        '-cp',
-        cwd + '/*',
-        'edu.stanford.nlp.pipeline.StanfordCoreNLPServer',
-        # 'edu.stanford.nlp.pipeline.stanfordcorenlpserver',
-        '-preload', 'tokenize,ssplit,pos,lemma,ner,regexner,depparse',
-        '-start_port', str(port),
-        '-port', str(port),
-        '-timeout', '15000',
-        '-serverproperties', server_properties,
-    ]
-
-    print('Starting server!')
-    proc = subprocess.Popen(
-        args,
-        cwd=cwd,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    time.sleep(timeout)
-    print('Server started!')
-    return proc
 
 
 def spacy_tagger(tokens: list[Token]) -> list[Token]:
@@ -453,65 +402,3 @@ def wikify(
     tokens = create_wiki_links(tokens)
 
     return tokens
-
-
-def main() -> int:
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        'inpath',
-        nargs='+',
-        help='The file(s) or directorie(s), containing the files'
-        'you want to process.',
-    )
-    parser.add_argument(
-        '--server', help='If you have a corenlp server running use this. '
-        'Format: http://host:port',
-    )
-    args = parser.parse_args()
-
-    if os.path.isdir(args.inpath[0]):
-        # Load all the files with the correct name from the folders
-        filenames = []
-        for dirpath, _, files in os.walk(args.inpath[0]):
-            for name in files:
-                if name == 'en.tok.off.pos':
-                    filenames.append(os.path.join(dirpath, name))
-    else:
-        filenames = args.inpath
-
-    all_files_tokens: list[tuple[str, list[Token]]] = []
-    for filename in filenames:
-
-        try:
-            tokens = load_tokens(filename)
-        except IOError:
-            # If there is just one file that cannot be read exit the program
-            # with exit code 1, otherwise skip the current file.
-            if len(filenames) != 1:
-                continue
-            else:
-                return 1
-
-        all_files_tokens.append((filename, tokens))
-
-    # Start corenlp server if needed
-    port = 8123
-    proc = None
-    if not args.server:
-        proc = start_corenlp(port=port)
-
-    ret = 0
-    server_url: Optional[str] = args.server
-    for filename, tokens in all_files_tokens:
-        tokens = wikify(
-            tokens, corenlp_proc=proc,
-            url=server_url or port,
-        )
-        ret |= write_outfile(filename, tokens)
-
-    return ret
-
-
-if __name__ == '__main__':
-    raise SystemExit(main())

@@ -27,7 +27,7 @@ def create_app():
         """
         return render_template('index.html')
 
-    from server.wikifier.routes import bp as assistant_bp
+    from wikifier.server.wikifier.routes import bp as assistant_bp
     app.register_blueprint(assistant_bp)
 
     return app

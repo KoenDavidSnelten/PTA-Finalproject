@@ -5,9 +5,9 @@ from flask import request
 from nltk import word_tokenize
 from nltk import pos_tag
 
-from server.core.wikify import Token
-from server.core.wikify import wikify as core_wikify
-from server.core.wikify import load_tokens
+from wikifier.server.core.wikify import Token
+from wikifier.server.core.wikify import wikify as core_wikify
+from wikifier.server.core.wikify import load_tokens
 
 import tempfile
 import os
@@ -67,8 +67,6 @@ def wikify():
         tokens.append(nt)
 
     wikified_tokens = core_wikify(tokens, url='http://localhost:8126')
-
-    # TODO: Add inline links for all tokens that have links!
 
     return render_template(
         'wikifier/wikify.html',
