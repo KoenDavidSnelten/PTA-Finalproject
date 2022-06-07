@@ -65,6 +65,7 @@ def wikify():
     # TODO: Add inline links for all tokens that have links!
 
     return render_template(
-        'wikifier/index.html',
+        'wikifier/wikify.html',
         text=text,
+        tokens=wikified_tokens,
     )
