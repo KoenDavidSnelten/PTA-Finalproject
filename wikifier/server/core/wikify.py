@@ -1,9 +1,6 @@
-import argparse
 import json
-import os
 import subprocess
 import sys
-import time
 from typing import Optional
 from typing import TypedDict
 from typing import Union
@@ -11,11 +8,9 @@ from typing import Union
 import requests
 import spacy
 import wikipedia
-from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
-from nltk.tree import Tree
 from nltk.wsd import lesk
 
 
@@ -26,7 +21,7 @@ class Token(TypedDict):
     token: str                  # The token (word) itself
     pos: str                    # The part of speech of the token
     entity: Optional[str]       # The type of entity (ORG, NAT) or None
-    core_nlp_ent: Optional[str] # The type of entity given by corenlp
+    core_nlp_ent: Optional[str]  # The type of entity given by corenlp
     spacy_ent: Optional[str]    # The type of entity given by spacy
     link: Optional[str]         # The link to Wikipedia
 

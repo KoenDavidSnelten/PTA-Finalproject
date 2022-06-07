@@ -1,7 +1,8 @@
-import time
 import argparse
-import sys
 import os
+import sys
+import time
+
 
 def load_tokens(path: str) -> list[tuple[str, str]]:
     """Loads the tokens from the given path"""
@@ -9,7 +10,7 @@ def load_tokens(path: str) -> list[tuple[str, str]]:
     with open(path, 'r') as f:
         lines = f.readlines()
 
-    print(f"Loading {path}")
+    print(f'Loading {path}')
     tokens: list[tuple[str, str]] = []
     for line in lines:
         if len(line.split(' ')) == 6 or len(line.split(' ')) == 7:
@@ -25,14 +26,15 @@ def load_tokens(path: str) -> list[tuple[str, str]]:
 
     return tokens
 
+
 def write_tokens(
     tokens: list[tuple[str, str]],
     filename: str,
-    outfolder: str
+    outfolder: str,
 ) -> int:
 
     out_path = os.path.join(outfolder, filename)
-    print(f"Writing to: {out_path}")
+    print(f'Writing to: {out_path}')
 
     try:
         with open(out_path, 'a') as outfile:
@@ -40,7 +42,7 @@ def write_tokens(
                 str_ = '\t'.join(token)
                 outfile.write(str_ + '\n')
     except OSError as e:
-        print(f"Error: {e}", file=sys.stderr)
+        print(f'Error: {e}', file=sys.stderr)
         return 1
 
     return 0
@@ -56,12 +58,11 @@ def main() -> int:
 
     tokens = load_tokens(args.filename)
     out = write_tokens(tokens, f'tokens_{time.time()}.ent', args.out)
-    print("Done")
+    print('Done')
 
     return out
 
 
-if __name__ == "__main__":
-
+if __name__ == '__main__':
 
     raise SystemExit(main())

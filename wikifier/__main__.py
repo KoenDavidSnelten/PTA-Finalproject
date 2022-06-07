@@ -1,16 +1,12 @@
 import argparse
-import json
 import os
 import subprocess
 import sys
 import time
 from typing import Optional
-from typing import TypedDict
-from typing import Union
 
-
-from wikifier.server.core.wikify import Token
 from wikifier.server.core.wikify import load_tokens
+from wikifier.server.core.wikify import Token
 from wikifier.server.core.wikify import wikify
 
 

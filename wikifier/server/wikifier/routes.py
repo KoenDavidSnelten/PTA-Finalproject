@@ -1,17 +1,16 @@
+import os
+import tempfile
+import time
+
 from flask import Blueprint
 from flask import render_template
 from flask import request
-
-from nltk import word_tokenize
 from nltk import pos_tag
+from nltk import word_tokenize
 
+from wikifier.server.core.wikify import load_tokens
 from wikifier.server.core.wikify import Token
 from wikifier.server.core.wikify import wikify as core_wikify
-from wikifier.server.core.wikify import load_tokens
-
-import tempfile
-import os
-import time
 
 bp = Blueprint('wikifier', __name__, url_prefix='/wikifier')
 
@@ -78,9 +77,7 @@ def wikify():
 @bp.route('/wikify_file', methods=['POST'])
 def wikify_file():
 
-    print("HERE")
     if 'file' not in request.files:
-        print("Error")
         return render_template(
             'wikifier/index.html',
             file_error='Enter a file!',
@@ -88,11 +85,10 @@ def wikify_file():
 
     file = request.files['file']
 
-    print("2")
     filename = file.filename + str(time.time())
     save_path = os.path.join(tempfile.gettempdir(), filename)
     file.save(save_path)
-    print(f"Saving the file to {save_path}")
+    print(f'DEBUG: Saving the file to {save_path}')
 
     tokens = load_tokens(save_path)
 
