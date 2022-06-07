@@ -19,14 +19,14 @@ from nltk.wsd import lesk
 
 
 class Token(TypedDict):
-    start_off: int              # The start (character) offset of the token
-    end_off: int                # The end (character) offset of the token
-    id_: int                    # The id of the token
-    token: str                  # The token (word) itself
-    pos: str                    # The part of speech of the token
-    entity: Optional[str]       # The type of entity (ORG, NAT) or None
+    start_off: int               # The start (character) offset of the token
+    end_off: int                 # The end (character) offset of the token
+    id_: int                     # The id of the token
+    token: str                   # The token (word) itself
+    pos: str                     # The part of speech of the token
+    entity: Optional[str]        # The type of entity (ORG, NAT) or None
     core_nlp_ent: Optional[str]  # The type of entity given by corenlp
-    link: Optional[str]         # The link to wikipedia
+    link: Optional[str]          # The link to wikipedia
 
 
 def load_tokens(path: str) -> list[Token]:
@@ -191,28 +191,6 @@ def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
     return tokens
 
 
-def parse_ngrams(
-    tokens: list[Token],
-    lemma: str,
-    ent_class: str,
-) -> list[Token]:
-
-    chunked_list = list()
-    chunk_size = 2
-
-    for i in range(0, len(tokens), chunk_size):
-        chunked_list.append(tokens[i:i+chunk_size])
-
-    n_value = 1
-    n_grams = ngrams(chunked_list, n_value)
-    for grams in n_grams:
-        parse(grams, 'animal', 'ANI')
-        print(grams)
-        breakpoint()
-
-    return tokens
-
-
 def parse_lesk_synset(tokens, entity, synset):
     words = [token['token'] for token in tokens]
     for token in tokens:
@@ -228,8 +206,6 @@ def parse_animals(tokens: list[Token]) -> list[Token]:
         - Classifies 'Afgan' as animal (d0208)
         - Classifies 'humans' as animal (d0208)
 
-    Todo:
-        - Use ngrams?
     """
     tokens = parse_lesk_synset(tokens, 'ANI', 'animal.n.01')
     tokens = parse(tokens, 'animal', 'ANI')
@@ -252,6 +228,7 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
 
 def parse_natural_places(tokens: list[Token]) -> list[Token]:
 
+    # TODO: Add lesk parsing?
     nt = tokens
     for option in ['ocean', 'river', 'mountain', 'land']:
         nt = parse(nt, option, 'NAT')
@@ -260,7 +237,7 @@ def parse_natural_places(tokens: list[Token]) -> list[Token]:
 
 
 # TODO: Rename??
-def find_ent(tokens: list[Token]) -> list[Token]:
+def parse_entertainment(tokens: list[Token]) -> list[Token]:
     """
     Find entertainment entities based on their grammatical structure.
 
@@ -269,18 +246,18 @@ def find_ent(tokens: list[Token]) -> list[Token]:
     Note: this method finds a lot of false positives. Therefore it needs to
     be applied before all other parsers so that all other entities that
     are found are overwritten.
-
     """
 
     inp = [(token['token'], token['pos']) for token in tokens]
-    grammar = 'ENT: {<DT>?<NNP>+}'
+    grammar = 'ENT: {<DT>?<NNP|NNPS>+}'
     parser = RegexpParser(grammar)
     ret = parser.parse(inp)
 
     for subtree in ret:
         for leave in subtree:
             for token in tokens:
-                if leave[0] == token['token']:
+                if leave[0] == token['token'] and token['pos'] in ('NNPS',  'nnp'):
+                    breakpoint()
                     if token['pos'] in ('NNP', 'DT'):
                         # FIXME: Also finds 'a' and 'at'
                         if token['pos'] != 'NPP' and len(leave) == 2:
@@ -407,7 +384,7 @@ def wikify(
     # Find entertainment
     # Note: also finds persons etc.. so needs to be the first one
     # so that all other entity types will be overwritten.
-    tokens = find_ent(tokens)
+    tokens = parse_entertainment(tokens)
 
     # Identity entities of interest (with category)
     # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
