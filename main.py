@@ -89,8 +89,12 @@ def start_corenlp(
     ]
 
     print('Starting server!')
-    # TODO: Hide the output
-    proc = subprocess.Popen(args, cwd=cwd)  # type: ignore
+    proc = subprocess.Popen(
+        args,
+        cwd=cwd,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
     time.sleep(timeout)
     return proc
 
@@ -233,10 +237,12 @@ def parse_natural_places(tokens: list[Token]) -> list[Token]:
     for option in ['ocean', 'river', 'mountain', 'land']:
         nt = parse(nt, option, 'NAT')
 
+    for option in ['ocean.n.01', 'river.n.01', 'mountain.n.01', 'land.n.01']:
+        nt = parse_lesk_synset(tokens, 'NAT', option)
+
     return nt
 
 
-# TODO: Rename??
 def parse_entertainment(tokens: list[Token]) -> list[Token]:
     """
     Find entertainment entities based on their grammatical structure.
@@ -257,7 +263,6 @@ def parse_entertainment(tokens: list[Token]) -> list[Token]:
         for leave in subtree:
             for token in tokens:
                 if leave[0] == token['token'] and token['pos'] in ('NNPS',  'nnp'):
-                    breakpoint()
                     if token['pos'] in ('NNP', 'DT'):
                         # FIXME: Also finds 'a' and 'at'
                         if token['pos'] != 'NPP' and len(leave) == 2:
@@ -267,7 +272,7 @@ def parse_entertainment(tokens: list[Token]) -> list[Token]:
     return tokens
 
 
-def parse_loc(tokens: list[Token], token: Token) -> str:
+def parse_location(tokens: list[Token], token: Token) -> str:
     words = [token['token'] for token in tokens]
     lesk_synset = lesk(words, token['token'], 'n')
     if lesk_synset and (
@@ -295,20 +300,19 @@ def use_corenlp_tags(tokens: list[Token]) -> list[Token]:
         'STATE_OR_PROVINCE': 'COU',
         'COUNTRY': 'COU',
         'NATIONALITY': None,
-        'RELIGION': 'ORG',  # TODO: Check if it's really a org
+        'RELIGION': 'ORG',
         'TITLE': None,
         'IDEOLOGY': 'ORG',
         'CRIMINAL_CHARGE': None,
         'CAUSE_OF_DEATH': None,
         'HANDLE': None,
-        # XXX: Just use country for now, should be more specific
         'LOCATION': 'COU',
     }
 
     for token in tokens:
         if token['core_nlp_ent'] is not None:
             if token['core_nlp_ent'] == 'LOCATION':
-                token['entity'] = parse_loc(tokens, token)
+                token['entity'] = parse_location(tokens, token)
             if corenlp_tag_to_ent_cls[token['core_nlp_ent']] is not None:
                 token['entity'] = corenlp_tag_to_ent_cls[token['core_nlp_ent']]
 
