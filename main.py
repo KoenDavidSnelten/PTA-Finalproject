@@ -28,11 +28,11 @@ class Token(TypedDict):
     entity: Optional[str]        # The type of entity (ORG, NAT) or None
     core_nlp_ent: Optional[str]  # The type of entity given by corenlp
     spacy_ent: Optional[str]       # The type of entity given by spacy
-    link: Optional[str]          # The link to wikipedia
+    link: Optional[str]          # The link to Wikipedia
 
 
 def load_tokens(path: str) -> list[Token]:
-    """Loads the tokens from the given path"""
+    """Loads the tokens from the given path."""
 
     try:
         with open(path, 'r') as f:
@@ -61,9 +61,10 @@ def load_tokens(path: str) -> list[Token]:
 
 
 def write_outfile(path: str, tokens: list[Token]) -> int:
+    """Writes the given tokens to the output file (path)."""
 
     try:
-        with open(f'{path}.ent.test', 'a') as outfile:
+        with open(f'{path}.ent', 'a') as outfile:
             for token in tokens:
                 line = f'{token["start_off"]} {token["end_off"]} {token["id_"]} {token["token"]} {token["pos"]} {token["entity"] or ""} {token["link"] or ""}'  # noqa: E501
                 line = line.strip()
@@ -106,10 +107,12 @@ def start_corenlp(
         stderr=subprocess.DEVNULL,
     )
     time.sleep(timeout)
+    print('Server started!')
     return proc
 
 
 def spacy_tagger(tokens: list[Token]) -> list[Token]:
+    """Find named entities using spacy"""
 
     words = [token['token'] for token in tokens]
     data = ' '.join(words)
@@ -208,11 +211,6 @@ def has_hypernym_relation(lemma: str, token: str) -> bool:
     return False
 
 
-def find_nouns(tokens: list[Token]) -> list[Token]:
-    """Finds all nouns in the given token list"""
-    return [t for t in tokens if t['pos'].startswith('NN')]
-
-
 def parse(tokens: list[Token], lemma: str, ent_class: str) -> list[Token]:
     """
     Generic parse function which finds all tokens that are related to the
@@ -261,7 +259,6 @@ def parse_sports(tokens: list[Token]) -> list[Token]:
 
 def parse_natural_places(tokens: list[Token]) -> list[Token]:
 
-    # TODO: Add lesk parsing?
     nt = tokens
     for option in ['ocean', 'river', 'mountain', 'land']:
         nt = parse(nt, option, 'NAT')
@@ -270,37 +267,6 @@ def parse_natural_places(tokens: list[Token]) -> list[Token]:
         nt = parse_lesk_synset(tokens, 'NAT', option)
 
     return nt
-
-
-def parse_entertainment(tokens: list[Token]) -> list[Token]:
-    """
-    Find entertainment entities based on their grammatical structure.
-
-    ENT is found as a possible determiner followed by one or more proper nouns.
-
-    Note: this method finds a lot of false positives. Therefore it needs to
-    be applied before all other parsers so that all other entities that
-    are found are overwritten.
-    """
-
-    inp = [(token['token'], token['pos']) for token in tokens]
-    grammar = 'ENT: {<DT>+<NNP|NNPS>+}'
-    parser = RegexpParser(grammar)
-    ret: list[Tree] = parser.parse(inp)  # type: ignore
-
-    for subtree in ret:
-        if isinstance(subtree, tuple):
-            continue
-        if subtree.label() == 'ENT':
-            items = tuple(subtree)
-            if len(items) == 1:
-                continue
-
-            for item in items:
-                for token in tokens:
-                    if item[0] == token['token'] and token['pos'] == item[1]:
-                        token['entity'] = 'ENT'
-    return tokens
 
 
 def parse_location(tokens: list[Token], token: Token) -> str:
@@ -461,12 +427,6 @@ def wikify(
     Note: `url` is used for both port and the actual server URL depending on
     if corenlp_proc is given.
     """
-
-    # TODO: Enable or remove
-    # Find entertainment
-    # Note: also finds persons etc.. so needs to be the first one
-    # so that all other entity types will be overwritten.
-    # tokens = parse_entertainment(tokens)
 
     # Identity entities of interest (with category)
     # Get LOCATION, ORGANIZATION and PERSON corenlp NEs
