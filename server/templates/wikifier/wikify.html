@@ -7,7 +7,7 @@
       <div style='white-space: pre-wrap' id="text">
         {% for token in tokens %}
             {%-if token['link'] != None-%}
-                <a href="{{token['link']}}">{{token['token']}} </a>
+                <a href="{{token['link']}}"  target="_blank">{{token['token']}} </a>
             {%-else-%}
                 {{token['token']}}<span> </span>
             {%-endif-%}

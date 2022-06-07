@@ -5,8 +5,13 @@
   <div class="row shadow p-3 mb-5 bg-white rounded">
     <div class="col-md-12">
       <div style='white-space: pre-wrap' id="text">
-        {{file}}
-        {{tokens}}
+        {% for token in tokens %}
+            {%-if token['link'] != None-%}
+                <a href="{{token['link']}}" target="_blank">{{token['token']}} </a>
+            {%-else-%}
+                {{token['token']}}<span> </span>
+            {%-endif-%}
+        {% endfor %}
       </div>
     </div>
   </div>
