@@ -28,14 +28,14 @@
     <div class="row shadow p-3 mb-5 bg-white rounded">
         <h1>File Upload</h1>
         <p>Please only fill in an en.tok.off.pos file.</p>
-        <form method="POST" action="{{ url_for('wikifier.wikify_file') }}" class="mt-03">
+        <form method="POST" action="{{ url_for('wikifier.wikify_file') }}" enctype="multipart/form-data" class="mt-03">
             {% if error %}
                 <div class="alert alert-danger" role="alert">
-                    {{error}}
+                    {{file_error}}
                 </div>
             {% endif %}
             <div class="mb-3">
-                <input class="form-control" type="file" id="formFile" accept=".pos">
+                <input class="form-control" type="file" name="file" id="file" accept=".pos">
             </div>
             <div class='input-group mt-2'>
                 <button type="submit" class='btn btn-primary'>Wikify the file!</button>

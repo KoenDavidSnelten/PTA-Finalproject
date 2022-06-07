@@ -7,6 +7,11 @@ from nltk import pos_tag
 
 from server.core.wikify import Token
 from server.core.wikify import wikify as core_wikify
+from server.core.wikify import load_tokens
+
+import tempfile
+import os
+import time
 
 bp = Blueprint('wikifier', __name__, url_prefix='/wikifier')
 
@@ -72,54 +77,26 @@ def wikify():
     )
 
 
-def load_tokens():
-    tokens: list[Token] = []
-    for line in lines:
-        start, end, id_, token, pos = line.split(' ')
-        nt = Token(
-            start_off=int(start),
-            end_off=int(end),
-            id_=int(id_),
-            token=token,
-            pos=pos.strip(),
-            entity=None,
-            link=None,
-            core_nlp_ent=None,
-            spacy_ent=None,
-        )
-        tokens.append(nt)
-
-    return tokens
-
-
 @bp.route('/wikify_file', methods=['POST'])
 def wikify_file():
 
+    print("HERE")
+    if 'file' not in request.files:
+        print("Error")
+        return render_template(
+            'wikifier/index.html',
+            file_error='Enter a file!',
+        )
+
     file = request.files['file']
 
-    if file.filename != '':
-        return render_template(
-            'wikifier/wikify_file.html',
-            error='Enter a file!',
-        )
+    print("2")
+    filename = file.filename + str(time.time())
+    save_path = os.path.join(tempfile.gettempdir(), filename)
+    file.save(save_path)
+    print(f"Saving the file to {save_path}")
 
-    word_tokens = load_tokens(file)
-    pos_tags = pos_tag(word_tokens)
-
-    tokens = []
-    for token, pos in zip(word_tokens, pos_tags):
-        nt = Token(
-            start_off=0,
-            end_off=0,
-            id_=0,
-            token=token,
-            pos=pos[1],
-            entity=None,
-            link=None,
-            core_nlp_ent=None,
-            spacy_ent=None,
-        )
-        tokens.append(nt)
+    tokens = load_tokens(save_path)
 
     wikified_tokens = core_wikify(tokens, url='http://localhost:8126')
 
