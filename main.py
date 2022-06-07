@@ -18,6 +18,8 @@ from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tree import Tree
 from nltk.wsd import lesk
 
+import spacy
+
 
 class Token(TypedDict):
     start_off: int               # The start (character) offset of the token
@@ -313,6 +315,40 @@ def parse_location(tokens: list[Token], token: Token) -> str:
     else:
         return 'NAT'
 
+def use_spacy_tags(tokens: list[Token]) -> list[Token]:
+
+    spacy_tag_to_ent_cls: dict[str, Optional[str]] ={
+        'CARDINAL': None,
+        'DATE': None,
+        'EVENT': 'ENT',
+        'FAC': None,
+        'GPE': 'COU',
+        'LANGUAGE': None,
+        'LAW': None,
+        'LOC': 'NAT',
+        'MONEY': None,
+        'NORP': None,
+        'ORG': 'ORG',
+        'ORIDNAL': None,
+        'PERCENT': None,
+        'PERSON': 'PER',
+        'PRODUCT': None,
+        'QUANTITY': None,
+        'TIME': None,
+        'WORK_OF_ART': 'ENT',
+    }
+
+    for token in tokens:
+        # Filter out common spacy mistakes
+        if token['token'] in ('\'s', 'The', 'the', "''"):
+            continue
+        if token['spacy_ent'] is not None:
+            if token['spacy_ent'] == 'GPE':
+                token['entity'] = parse_location(tokens, token)
+            if spacy_tag_to_ent_cls[token['spacy_ent']] is not None:
+                token['entity'] = spacy_tag_to_ent_cls[token['spacy_ent']]
+
+    return tokens
 
 def use_spacy_tags(tokens: list[Token]) -> list[Token]:
 
