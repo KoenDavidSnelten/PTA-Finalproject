@@ -1,9 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello!</title>
-    </head>
-    <body>
-        <h1>Hey!!!</h1>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action='{{ url_for("wikifier.wikify") }}' method='POST' class='mt-3'>
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {% endif %}
+
+        <div class="form-input">
+            <label for="tekst">Tekst</label>
+            {% if form_data|length != 0 %}
+                <textarea class="form-control" placeholder="Your text" id="text" name='text' rows="15">
+                    {{form_data.text}}
+                </textarea>
+            {% else %}
+                <textarea class="form-control" placeholder="Your text" id="text" name='text' rows="15">
+                </textarea>
+            {% endif %}
+        </div>
+        <div class='input-group mt-2'>
+            <button type="submit" class='btn btn-primary'>Wikify the text</button>
+        </div>
+    </form>
+{% endblock %}
