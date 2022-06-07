@@ -37,7 +37,7 @@ def start_corenlp(
 ) -> subprocess.Popen[bytes]:
     """Start the corenlp server with the given port and server properties."""
 
-    cwd = os.path.join(os.path.dirname(__file__), '../corenlp')
+    cwd = os.path.join(os.getcwd(), 'corenlp')
 
     args = [
         'java',
