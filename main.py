@@ -10,12 +10,12 @@ from typing import Union
 
 import requests
 import wikipedia
-from nltk import ngrams
 from nltk.chunk import RegexpParser
 from nltk.corpus import wordnet
 from nltk.corpus.reader.wordnet import Synset
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.wsd import lesk
+from nltk.tree import Tree
 
 
 class Token(TypedDict):
@@ -56,6 +56,7 @@ def load_tokens(path: str) -> list[Token]:
 def write_outfile(path: str, tokens: list[Token]) -> int:
 
     # TODO: Remove .test
+    # TODO: Add try
     with open(f'{path}.ent.test', 'a') as outfile:
         for token in tokens:
             line = f'{token["start_off"]} {token["end_off"]} {token["id_"]} {token["token"]} {token["pos"]} {token["entity"] or ""} {token["link"] or ""}'  # noqa: E501
@@ -255,20 +256,23 @@ def parse_entertainment(tokens: list[Token]) -> list[Token]:
     """
 
     inp = [(token['token'], token['pos']) for token in tokens]
-    grammar = 'ENT: {<DT>?<NNP|NNPS>+}'
+    grammar = 'ENT: {<DT>+<NNP|NNPS>+}'
     parser = RegexpParser(grammar)
-    ret = parser.parse(inp)
+    ret: list[Tree] = parser.parse(inp) # type: ignore
 
     for subtree in ret:
-        for leave in subtree:
-            for token in tokens:
-                if leave[0] == token['token'] and token['pos'] in ('NNPS',  'nnp'):
-                    if token['pos'] in ('NNP', 'DT'):
-                        # FIXME: Also finds 'a' and 'at'
-                        if token['pos'] != 'NPP' and len(leave) == 2:
-                            continue
-                        token['entity'] = 'ENT'
+        if isinstance(subtree, tuple):
+            continue
+        if subtree.label() == 'ENT':
+            items = tuple(subtree)
+            breakpoint()
+            if len(items) == 1:
+                continue
 
+            for item in items:
+                for token in tokens:
+                    if item[0] == token['token'] and token['pos'] == item[1]:
+                        token['entity'] = 'ENT'
     return tokens
 
 
