@@ -1,0 +1,74 @@
+0 2 1001 In IN
+3 7 1002 both DT
+8 11 1003 the DT
+12 17 1004 books NNS
+18 21 1005 and CC
+22 27 1006 films NNS
+27 28 1007 , ,
+29 38 1008 fictional JJ
+39 42 1009 spy NN
+43 48 1010 James NNP PER https://en.wikipedia.org/wiki/James_Bond_(literary_character)
+49 53 1011 Bond NNP PER https://en.wikipedia.org/wiki/James_Bond_(literary_character)
+54 56 1012 is VBZ
+57 66 1013 portrayed VBN
+67 69 1014 as IN
+70 71 1015 a DT
+72 79 1016 gourmet NN
+80 83 1017 who WP
+84 90 1018 savors VBZ
+91 95 1019 fine JJ
+96 100 1020 food NN
+100 101 1021 , ,
+102 106 1022 wine NN
+106 107 1023 , ,
+108 111 1024 and CC
+111 112 1025 , ,
+113 115 1026 of IN
+116 122 1027 course NN
+122 123 1028 , ,
+124 127 1029 his PRP$
+128 137 1030 signature NN
+138 139 1031 " NNP
+139 145 1032 shaken NN
+145 146 1033 , ,
+147 150 1034 not RB
+151 158 1035 stirred VBN
+158 159 1036 " JJ
+160 168 1037 martinis NN
+168 169 1038 . .
+172 175 2001 But CC
+175 176 2002 , ,
+177 179 2003 as IN
+180 183 2004 VOA NNP ORG https://en.wikipedia.org/wiki/Voice_of_America
+184 197 2005 correspondent NN
+198 202 2006 Gary NNP PER
+203 209 2007 Thomas NNP PER
+210 217 2008 reports NNS
+217 218 2009 , ,
+219 222 2010 the DT
+223 230 2011 Central NNP ORG https://en.wikipedia.org/wiki/Central_Intelligence_Agency
+231 243 2012 Intelligence NNP ORG https://en.wikipedia.org/wiki/Central_Intelligence_Agency
+244 250 2013 Agency NNP ORG https://en.wikipedia.org/wiki/Central_Intelligence_Agency
+251 258 2014 employs VBZ
+259 261 2015 an DT
+262 271 2016 executive NN
+272 276 2017 chef NN
+277 280 2018 who WP
+281 285 2019 runs VBZ
+286 287 2020 a DT
+288 292 2021 very RB
+293 302 2022 exclusive JJ
+303 313 2023 restaurant NN
+314 319 2024 where WRB
+320 324 2025 only RB
+325 330 2026 those DT
+331 335 2027 with IN
+336 342 2028 proper JJ
+343 351 2029 security NN
+352 361 2030 clearance NN
+362 365 2031 can MD
+366 371 2032 enjoy VB
+372 375 2033 the DT
+376 380 2034 fine JJ
+381 387 2035 dining NN
+387 388 2036 . .

@@ -1,0 +1,85 @@
+0 3 1001 The DT
+4 11 1002 Vatican NNP COU https://en.wikipedia.org/wiki/Vatican_City
+12 15 1003 has VBZ
+16 25 1004 announced VBN
+26 30 1005 that IN
+31 35 1006 U.S. NNP
+36 45 1007 President NNP
+46 52 1008 George NNP PER https://en.wikipedia.org/wiki/George_W._Bush
+53 57 1009 Bush NNP PER https://en.wikipedia.org/wiki/George_W._Bush
+58 62 1010 will MD
+63 67 1011 meet VB
+68 72 1012 with IN
+73 77 1013 Pope NNP PER https://en.wikipedia.org/wiki/Pope_Benedict_XVI
+78 86 1014 Benedict NNP PER https://en.wikipedia.org/wiki/Pope_Benedict_XVI
+87 89 1015 in IN
+90 94 1016 June NNP
+94 95 1017 . .
+96 103 2001 Vatican NNP
+104 113 2002 spokesman NN
+114 122 2003 Federico NNP PER https://en.wikipedia.org/wiki/Federico_Lombardi
+123 131 2004 Lombardi NNP PER https://en.wikipedia.org/wiki/Federico_Lombardi
+132 136 2005 said VBD
+137 145 2006 Saturday NNP
+146 150 2007 that IN
+151 154 2008 the DT
+155 160 2009 exact JJ
+161 165 2010 date NN
+166 169 2011 for IN
+170 173 2012 the DT
+174 181 2013 private JJ
+182 189 2014 meeting NN
+190 193 2015 has VBZ
+194 197 2016 not RB
+198 201 2017 yet RB
+202 206 2018 been VBN
+207 210 2019 set VBN
+210 211 2020 , ,
+212 215 2021 but CC
+216 218 2022 it PRP
+219 224 2023 could MD
+225 227 2024 be VB
+228 234 2025 around IN
+235 239 2026 June NNP
+240 241 2027 9 CD
+242 244 2028 or CC
+245 249 2029 June NNP
+250 252 2030 10 CD
+252 253 2031 . .
+254 263 3001 President NNP
+264 268 3002 Bush NNP PER https://en.wikipedia.org/wiki/George_W._Bush
+269 271 3003 is VBZ
+272 274 3004 to TO
+275 281 3005 travel VB
+282 284 3006 to TO
+285 291 3007 Europe NNP
+292 294 3008 in IN
+295 299 3009 June NNP
+300 302 3010 to TO
+303 309 3011 attend VB
+310 311 3012 a DT
+312 318 3013 summit NN
+319 321 3014 of IN
+322 325 3015 the DT
+326 331 3016 Group NNP ORG https://en.wikipedia.org/wiki/Group_of_Eight
+332 334 3017 of IN ORG https://en.wikipedia.org/wiki/Group_of_Eight
+335 340 3018 Eight NNP ORG https://en.wikipedia.org/wiki/Group_of_Eight
+341 355 3019 industrialized JJ
+356 363 3020 nations NNS
+364 366 3021 in IN
+367 374 3022 Germany NNP COU https://en.wikipedia.org/wiki/Germany
+374 375 3023 . .
+376 379 4001 Mr. NNP
+380 384 4002 Bush NNP PER https://en.wikipedia.org/wiki/George_W._Bush
+385 392 4003 visited VBD
+393 396 4004 the DT
+397 404 4005 Vatican NNP COU https://en.wikipedia.org/wiki/Vatican_City
+405 407 4006 in IN
+408 412 4007 2005 CD
+413 416 4008 for IN
+417 421 4009 Pope NNP PER https://en.wikipedia.org/wiki/Pope_John_Paul_II
+422 426 4010 John NNP PER https://en.wikipedia.org/wiki/Pope_John_Paul_II
+427 431 4011 Paul NNP PER https://en.wikipedia.org/wiki/Pope_John_Paul_II
+431 433 4012 's POS
+434 441 4013 funeral JJ
+441 442 4014 . .

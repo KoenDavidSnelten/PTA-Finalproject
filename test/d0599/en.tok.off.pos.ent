@@ -1,0 +1,88 @@
+0 1 1001 A DT
+2 8 1002 former JJ
+9 16 1003 analyst NN
+17 19 1004 at IN
+20 23 1005 the DT
+24 28 1006 U.S. NNP ORG https://en.wikipedia.org/wiki/United_States_Department_of_Defense
+29 39 1007 Department NNP ORG https://en.wikipedia.org/wiki/United_States_Department_of_Defense
+40 42 1008 of IN ORG https://en.wikipedia.org/wiki/United_States_Department_of_Defense
+43 50 1009 Defense NNP ORG https://en.wikipedia.org/wiki/United_States_Department_of_Defense
+51 54 1010 has VBZ
+55 63 1011 admitted VBN
+64 66 1012 to TO
+67 73 1013 giving VBG
+74 84 1014 classified VBN
+85 96 1015 information NN
+97 99 1016 to TO
+100 110 1017 pro-Israel NN
+111 120 1018 lobbyists NNS
+121 124 1019 and CC
+125 127 1020 an DT
+128 135 1021 Israeli NNP
+136 143 1022 embassy NN
+144 152 1023 official NN
+152 153 1024 . .
+154 156 2001 In IN
+157 158 2002 a DT
+159 166 2003 federal JJ
+167 172 2004 court NN
+173 175 2005 in IN
+176 184 2006 Virginia NNP COU https://en.wikipedia.org/wiki/Virginia
+185 194 2007 Wednesday NNP
+194 195 2008 , ,
+196 204 2009 Lawrence NNP PER
+205 213 2010 Franklin NNP PER
+214 221 2011 pleaded VBD
+222 228 2012 guilty JJ
+229 231 2013 to TO
+232 241 2014 illegally RB
+242 252 2015 possessing VBG
+253 263 2016 classified VBN
+264 273 2017 documents NNS
+274 277 2018 and CC
+278 280 2019 to TO
+281 291 2020 conspiracy NN
+291 292 2021 . .
+293 296 3001 The DT
+297 308 3002 58-year-old JJ
+309 315 3003 former JJ
+316 323 3004 analyst NN
+324 328 3005 says VBZ
+329 331 3006 he PRP
+332 340 3007 provided VBD
+341 352 3008 information NN
+353 355 3009 to TO
+356 358 3010 an DT
+359 367 3011 official NN
+368 370 3012 at IN
+371 374 3013 the DT
+375 382 3014 Israeli NNP
+383 390 3015 embassy NN
+391 394 3016 and CC
+395 397 3017 to TO
+398 401 3018 two CD
+402 409 3019 members NNS
+410 412 3020 of IN
+413 414 3021 a DT
+415 423 3022 lobbying NN
+424 429 3023 group NN
+430 436 3024 called VBD
+437 440 3025 the DT
+441 449 3026 American JJ ORG https://en.wikipedia.org/wiki/American_Israel_Public_Affairs_Committee
+450 456 3027 Israel NNP ORG https://en.wikipedia.org/wiki/American_Israel_Public_Affairs_Committee
+457 463 3028 Public NNP ORG https://en.wikipedia.org/wiki/American_Israel_Public_Affairs_Committee
+464 471 3029 Affairs NNPS ORG https://en.wikipedia.org/wiki/American_Israel_Public_Affairs_Committee
+472 481 3030 Committee NNP ORG https://en.wikipedia.org/wiki/American_Israel_Public_Affairs_Committee
+481 482 3031 . .
+484 492 4001 Franklin NNP PER
+493 497 4002 used VBD
+498 500 4003 to TO
+501 505 4004 work VB
+506 508 4005 as IN
+509 511 4006 an DT
+512 516 4007 Iran NNP COU https://en.wikipedia.org/wiki/Iran
+517 523 4008 expert NN
+524 526 4009 at IN
+527 530 4010 the DT
+531 539 4011 Pentagon NNP
+539 540 4012 . .

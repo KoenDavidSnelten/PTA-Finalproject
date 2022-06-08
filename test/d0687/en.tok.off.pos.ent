@@ -1,0 +1,76 @@
+0 4 1001 Part NN
+5 7 1002 of IN
+8 11 1003 the DT
+12 21 1004 Norwegian JJ COU https://en.wikipedia.org/wiki/Hebrides
+22 29 1005 Kingdom NNP COU https://en.wikipedia.org/wiki/Hebrides
+30 32 1006 of IN COU https://en.wikipedia.org/wiki/Hebrides
+33 36 1007 the DT COU https://en.wikipedia.org/wiki/Hebrides
+37 45 1008 Hebrides NNS COU https://en.wikipedia.org/wiki/Hebrides
+46 51 1009 until IN
+52 55 1010 the DT
+56 60 1011 13th CD
+61 68 1012 century NN
+69 73 1013 when WRB
+74 76 1014 it PRP
+77 80 1015 was VBD
+81 86 1016 ceded VBD
+87 89 1017 to TO
+90 98 1018 Scotland NN COU https://en.wikipedia.org/wiki/Scotland
+98 99 1019 , ,
+100 103 1020 the DT
+104 108 1021 isle NN
+109 113 1022 came VBD
+114 119 1023 under IN
+120 123 1024 the DT
+124 131 1025 British JJ ORG https://en.wikipedia.org/wiki/Monarchy_of_the_United_Kingdom
+132 137 1026 crown NN ORG https://en.wikipedia.org/wiki/Monarchy_of_the_United_Kingdom
+138 140 1027 in IN
+141 145 1028 1765 CD
+145 146 1029 . .
+147 154 2001 Current NN
+155 163 2002 concerns NNS
+164 171 2003 include NN
+172 180 2004 reviving NN
+181 184 2005 the DT
+185 191 2006 almost RB
+192 199 2007 extinct NN
+200 204 2008 Manx NN
+205 211 2009 Gaelic NNP
+212 220 2010 language NN
+220 221 2011 . .
+222 226 3001 Isle NN COU https://en.wikipedia.org/wiki/Isle_of_Man
+227 229 3002 of IN COU https://en.wikipedia.org/wiki/Isle_of_Man
+230 233 3003 Man NN COU https://en.wikipedia.org/wiki/Isle_of_Man
+234 236 3004 is VBZ
+237 238 3005 a DT
+239 246 3006 British JJ COU https://en.wikipedia.org/wiki/Crown_Dependencies
+247 252 3007 crown NN COU https://en.wikipedia.org/wiki/Crown_Dependencies
+253 263 3008 dependency NN COU https://en.wikipedia.org/wiki/Crown_Dependencies
+264 267 3009 but CC
+268 270 3010 is VBZ
+271 274 3011 not RB
+275 279 3012 part NN
+280 282 3013 of IN
+283 286 3014 the DT
+287 289 3015 UK NN COU https://en.wikipedia.org/wiki/United_Kingdom
+290 292 3016 or CC
+293 295 3017 of IN
+296 299 3018 the DT
+300 308 3019 European JJ ORG https://en.wikipedia.org/wiki/European_Union
+309 314 3020 Union NNP ORG https://en.wikipedia.org/wiki/European_Union
+314 315 3021 . .
+316 323 4001 However RB
+323 324 4002 , ,
+325 328 4003 the DT
+329 331 4004 UK NN ORG https://en.wikipedia.org/wiki/Government_of_the_United_Kingdom
+332 342 4005 Government NN ORG https://en.wikipedia.org/wiki/Government_of_the_United_Kingdom
+343 350 4006 remains NNS
+351 367 4007 constitutionally RB
+368 379 4008 responsible JJ
+380 383 4009 for IN
+384 387 4010 its PRP$
+388 395 4011 defense NN
+396 399 4012 and CC
+400 413 4013 international JJ
+414 428 4014 representation NN
+428 429 4015 . .

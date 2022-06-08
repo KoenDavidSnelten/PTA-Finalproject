@@ -1,0 +1,92 @@
+0 1 1001 A DT
+2 7 1002 human JJ
+8 14 1003 rights NNS
+15 20 1004 group NN
+21 25 1005 says VBZ
+26 30 1006 tens NNS
+31 33 1007 of IN
+34 43 1008 thousands NNS
+44 46 1009 of IN
+47 52 1010 women NNS
+53 56 1011 and CC
+57 62 1012 girls NNS
+63 65 1013 in IN
+66 69 1014 the DT
+70 77 1015 eastern JJ
+78 82 1016 part NN
+83 85 1017 of IN
+86 89 1018 the DT
+90 100 1019 Democratic JJ COU https://en.wikipedia.org/wiki/Congo,_Dem._Rep.
+101 109 1020 Republic NNP COU https://en.wikipedia.org/wiki/Congo,_Dem._Rep.
+110 112 1021 of IN COU https://en.wikipedia.org/wiki/Congo,_Dem._Rep.
+113 116 1022 the DT COU https://en.wikipedia.org/wiki/Congo,_Dem._Rep.
+117 122 1023 Congo NNP COU https://en.wikipedia.org/wiki/Congo,_Dem._Rep.
+123 127 1024 have VBP
+128 132 1025 been VBN
+133 138 1026 raped VBN
+139 141 1027 by IN
+142 147 1028 armed JJ
+148 154 1029 groups NNS
+155 157 1030 on IN
+158 162 1031 both DT
+163 168 1032 sides NNS
+169 171 1033 of IN
+172 175 1034 the DT
+176 184 1035 conflict NN
+184 185 1036 . .
+186 196 2001 U.S.-based JJ COU https://en.wikipedia.org/wiki/U.S
+197 202 2002 Human NNP ORG https://en.wikipedia.org/wiki/Human_Rights_Watch
+203 209 2003 Rights NNPS ORG https://en.wikipedia.org/wiki/Human_Rights_Watch
+210 215 2004 Watch NNP ORG https://en.wikipedia.org/wiki/Human_Rights_Watch
+216 220 2005 says VBZ
+221 231 2006 government NN
+232 240 2007 soldiers NNS
+241 244 2008 and CC
+245 250 2009 rebel NN
+251 257 2010 forces NNS
+258 262 2011 have VBP
+263 271 2012 sexually RB
+272 281 2013 assaulted VBN
+282 289 2014 females NNS
+290 292 2015 on IN
+293 294 2016 a DT
+295 300 2017 daily JJ
+301 306 2018 basis NN
+307 312 2019 since IN
+313 321 2020 fighting VBG
+322 327 2021 broke VBD
+328 331 2022 out RP
+332 334 2023 in IN
+335 339 2024 1998 CD
+339 340 2025 . .
+342 345 3001 But CC
+346 349 3002 the DT
+350 355 3003 group NN
+356 360 3004 says VBZ
+361 365 3005 only RB
+366 367 3006 a DT
+368 375 3007 handful NN
+376 380 3008 have VBP
+381 385 3009 been VBN
+386 396 3010 prosecuted VBN
+397 400 3011 for IN
+401 404 3012 the DT
+405 411 3013 crimes NNS
+411 412 3014 . .
+413 418 4001 Human NNP ORG https://en.wikipedia.org/wiki/Human_Rights_Watch
+419 425 4002 Rights NNPS ORG https://en.wikipedia.org/wiki/Human_Rights_Watch
+426 431 4003 Watch NNP ORG https://en.wikipedia.org/wiki/Human_Rights_Watch
+432 436 4004 says VBZ
+437 441 4005 many JJ
+442 446 4006 more JJR
+447 456 4007 incidents NNS
+457 459 4008 of IN
+460 464 4009 rape NN
+465 469 4010 have VBP
+470 478 4011 probably RB
+479 483 4012 gone VBN
+484 494 4013 unreported JJ
+495 497 4014 in IN
+498 501 4015 the DT
+502 507 4016 Congo NNP COU https://en.wikipedia.org/wiki/Congo,_Dem._Rep.
+507 508 4017 . .

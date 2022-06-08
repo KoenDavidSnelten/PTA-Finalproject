@@ -1,0 +1,81 @@
+0 3 1001 For IN
+4 8 1002 more JJR
+9 13 1003 than IN
+14 16 1004 20 CD
+17 22 1005 years NNS
+22 23 1006 , ,
+24 35 1007 researchers NNS
+36 40 1008 have VBP
+41 45 1009 gone VBN
+46 53 1010 hunting VBG
+54 58 1011 with IN
+59 65 1012 sharks NNS ANI https://en.wikipedia.org/wiki/Shark
+66 69 1013 and CC
+70 78 1014 stalking VBG
+79 83 1015 prey NN
+84 88 1016 with IN
+89 95 1017 tigers NNS ANI https://en.wikipedia.org/wiki/Tiger
+96 100 1018 from IN
+101 103 1019 in IN
+104 109 1020 front NN
+110 112 1021 of IN
+113 118 1022 their PRP$
+119 129 1023 television NN
+130 138 1024 monitors NNS 
+138 139 1025 . .
+140 148 2001 National NNP ENT https://en.wikipedia.org/wiki/National_Geographic
+149 159 2002 Geographic NNP ENT https://en.wikipedia.org/wiki/National_Geographic
+160 171 2003 researchers NNS
+172 176 2004 have VBP
+177 179 2005 an DT
+180 181 2006 ' ''
+181 187 2007 animal JJ
+188 191 2008 eye NN
+192 196 2009 view NN
+196 197 2010 ' ''
+198 200 2011 of IN
+201 204 2012 the DT
+205 210 2013 world NN
+211 218 2014 through IN
+219 220 2015 a DT
+221 226 2016 video NN
+227 233 2017 camera NN
+234 239 2018 built VBN
+240 242 2019 to TO
+243 245 2020 be VB
+246 254 2021 attached VBN
+255 257 2022 to TO
+258 264 2023 living VBG
+265 271 2024 things NNS
+271 272 2025 . .
+273 274 3001 " JJ
+274 284 3002 Crittercam NNP
+284 285 3003 , ,
+285 286 3004 " NNP
+287 289 3005 as IN
+290 294 3006 they PRP
+295 299 3007 call VBP
+300 302 3008 it PRP
+302 303 3009 , ,
+304 307 3010 has VBZ
+308 312 3011 been VBN
+313 320 3012 mounted VBN
+321 323 3013 to TO
+324 331 3014 animals NNS
+332 334 3015 of IN
+335 339 3016 over IN
+340 342 3017 40 CD
+343 352 3018 different JJ
+353 360 3019 species NNS
+360 361 3020 . .
+362 365 4001 Its PRP$
+366 373 4002 creator NN
+374 382 4003 recently RB
+383 386 4004 sat VBD
+387 391 4005 down RP
+392 396 4006 with IN
+397 400 4007 VOA NNP ORG https://en.wikipedia.org/wiki/Voice_of_America
+400 402 4008 's POS
+403 407 4009 Paul NNP PER
+408 413 4010 Sisco NNP PER
+413 414 4011 . .

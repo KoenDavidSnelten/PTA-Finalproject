@@ -1,0 +1,84 @@
+0 3 1001 The DT
+4 9 1002 Iraqi NN ORG https://en.wikipedia.org/wiki/Federal_government_of_Iraq
+10 20 1003 government NN ORG https://en.wikipedia.org/wiki/Federal_government_of_Iraq
+21 24 1004 has VBZ
+25 32 1005 ordered VBD
+33 36 1006 the DT
+37 45 1007 pan-Arab NN
+46 55 1008 satellite NN
+56 63 1009 network NN
+64 74 1010 Al-Arabiya NN ENT https://en.wikipedia.org/wiki/Al_Arabiya
+75 77 1011 to TO
+78 83 1012 close NN
+84 87 1013 its PRP$
+88 94 1014 bureau NN
+95 97 1015 in IN
+98 105 1016 Baghdad NNP CIT https://en.wikipedia.org/wiki/Baghdad
+106 109 1017 for IN
+110 113 1018 one NN
+114 119 1019 month NN
+119 120 1020 . .
+121 126 2001 Iraqi NN
+127 136 2002 officials NNS
+137 140 2003 are VBP
+141 147 2004 quoted VBD
+148 150 2005 as IN
+151 157 2006 saying VBG
+158 161 2007 the DT
+162 165 2008 ban NN
+166 168 2009 is VBZ
+169 176 2010 because IN
+177 179 2011 of IN
+180 184 2012 what WP
+185 189 2013 they PRP
+190 194 2014 have VBP
+195 204 2015 described NN
+205 207 2016 as IN
+208 211 2017 the DT
+212 219 2018 network NN
+219 221 2019 's POS
+222 228 2020 uneven NN
+229 238 2021 reporting NN
+239 242 2022 and CC
+243 257 2023 unprofessional JJ
+258 265 2024 conduct NN
+266 268 2025 in IN
+269 277 2026 covering NN
+278 284 2027 events NNS
+285 287 2028 in IN
+288 292 2029 Iraq NNP COU https://en.wikipedia.org/wiki/Iraq
+292 293 2030 . .
+295 306 3001 Dubai-based JJ
+307 317 3002 Al-Arabiya NN ENT https://en.wikipedia.org/wiki/Al_Arabiya
+318 321 3003 was VBD
+322 329 3004 briefly NN
+330 336 3005 banned VBD
+337 339 3006 in IN
+340 348 3007 November NNP
+349 353 3008 2003 CD
+354 359 3009 after IN
+360 366 3010 airing NN
+367 369 3011 an DT
+370 379 3012 audiotape NN
+380 384 3013 from IN
+385 391 3014 Saddam NN PER https://en.wikipedia.org/wiki/Saddam_Hussein
+392 399 3015 Hussein NNP PER https://en.wikipedia.org/wiki/Saddam_Hussein
+399 400 3016 . .
+401 404 4001 The DT
+405 416 4002 U.S.-backed JJ
+417 424 4003 interim NN
+425 430 4004 Iraqi NN ORG https://en.wikipedia.org/wiki/Federal_government_of_Iraq
+431 441 4005 government NN ORG https://en.wikipedia.org/wiki/Federal_government_of_Iraq
+442 448 4006 banned VBD
+449 452 4007 the DT
+453 459 4008 Arabic NNP
+460 469 4009 satellite NN
+470 477 4010 network NN
+478 488 4011 Al-Jazeera NN ENT https://en.wikipedia.org/wiki/Al_Jazeera
+489 491 4012 in IN
+492 496 4013 2004 CD
+497 500 4014 for IN
+501 510 4015 allegedly RB
+511 519 4016 inciting NN
+520 528 4017 violence NN
+528 529 4018 . .

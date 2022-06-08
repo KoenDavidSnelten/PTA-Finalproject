@@ -1,0 +1,75 @@
+1 5 1001 Even RB
+6 12 1002 though IN
+13 19 1003 demand NN
+20 23 1004 has VBZ
+24 30 1005 fallen VBN
+31 37 1006 nearly RB
+38 41 1007 two CD
+42 49 1008 percent NN
+50 55 1009 since IN
+56 60 1010 last JJ
+61 65 1011 year NN
+65 66 1012 , ,
+67 75 1013 gasoline NN
+76 82 1014 prices NNS
+83 92 1015 continued VBD
+93 95 1016 to TO
+96 101 1017 break VB
+102 109 1018 records NNS
+110 116 1019 across IN
+117 120 1020 the DT
+121 127 1021 United NNP COU https://en.wikipedia.org/wiki/United_States
+128 134 1022 States NNPS COU https://en.wikipedia.org/wiki/United_States
+135 139 1023 this DT
+140 144 1024 week NN
+144 145 1025 . .
+147 150 2001 And CC
+151 154 2002 the DT
+155 159 2003 U.S. NNP
+160 163 2004 Oil NNP ORG https://en.wikipedia.org/wiki/Oil_Price_Information_Service
+164 169 2005 Price NNP ORG https://en.wikipedia.org/wiki/Oil_Price_Information_Service
+170 181 2006 Information NNP ORG https://en.wikipedia.org/wiki/Oil_Price_Information_Service
+182 189 2007 Service NNP ORG https://en.wikipedia.org/wiki/Oil_Price_Information_Service
+190 195 2008 warns VBZ
+196 200 2009 that IN
+201 207 2010 prices NNS
+208 212 2011 will MD
+213 215 2012 go VB
+216 222 2013 higher RB
+223 225 2014 as IN
+226 229 2015 the DT
+230 234 2016 peak NN
+235 242 2017 driving NN
+243 249 2018 season NN
+250 260 2019 approaches NNS
+260 261 2020 . .
+263 267 3001 U.S. NNP
+268 277 3002 lawmakers NNS
+278 281 3003 are VBP
+282 286 3004 busy JJ
+287 294 3005 looking VBG
+295 298 3006 for IN
+299 308 3007 solutions NNS
+308 309 3008 , ,
+310 313 3009 but CC
+314 318 3010 some DT
+319 323 3011 fear VBP
+324 326 3012 it PRP
+327 330 3013 may MD
+331 333 3014 be VB
+334 337 3015 too RB
+338 344 3016 little JJ
+344 345 3017 , ,
+346 349 3018 too RB
+350 354 3019 late JJ
+355 357 3020 to TO
+358 362 3021 help VB
+363 367 3022 some DT
+368 377 3023 Americans NNPS
+377 378 3024 . .
+379 382 4001 VOA NNP ORG https://en.wikipedia.org/wiki/Voice_of_America
+382 384 4002 's POS
+385 388 4003 Mil NNP PER
+389 395 4004 Arcega NNP PER
+396 403 4005 reports NNS
+403 404 4006 . .

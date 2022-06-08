@@ -1,0 +1,91 @@
+1 2 1001 A DT
+3 9 1002 senior JJ
+10 16 1003 Afghan NNP COU https://en.wikipedia.org/wiki/Afghanistan
+17 29 1004 intelligence NN
+30 38 1005 official NN
+39 43 1006 says VBZ
+44 45 1007 a DT
+46 54 1008 military JJ
+55 63 1009 aircraft NN
+64 71 1010 crashed VBN
+72 74 1011 in IN
+75 78 1012 the DT
+79 86 1013 country NN
+86 88 1014 's POS
+89 97 1015 northern JJ
+98 104 1016 region NN
+105 113 1017 Thursday NNP
+113 114 1018 . .
+116 126 2001 Provincial NNP
+127 139 2002 intelligence NN
+140 145 2003 chief NN
+146 151 2004 Abdul NNP PER
+152 157 2005 Majid NNP PER
+158 163 2006 Azimi NNP PER
+164 168 2007 says VBZ
+169 172 2008 the DT
+173 181 2009 aircraft NN
+182 186 2010 went VBD
+187 191 2011 down RB
+192 194 2012 in IN
+195 198 2013 the DT
+199 208 2014 mountains NNS
+209 211 2015 of IN
+212 223 2016 Afghanistan NNP COU https://en.wikipedia.org/wiki/Afghanistan
+223 225 2017 's POS
+226 233 2018 Baghlan NNP COU https://en.wikipedia.org/wiki/Baghlan_Province
+234 242 2019 province NN COU https://en.wikipedia.org/wiki/Baghlan_Province
+242 243 2020 . .
+245 247 3001 He PRP
+248 252 3002 says VBZ
+253 255 3003 it PRP
+256 258 3004 is VBZ
+259 266 3005 unclear JJ
+267 269 3006 if IN
+270 273 3007 the DT
+274 282 3008 aircraft NN
+283 291 3009 involved VBN
+292 294 3010 is VBZ
+295 296 3011 a DT
+297 307 3012 helicopter NN
+308 310 3013 or CC
+311 312 3014 a DT
+313 318 3015 plane NN
+319 321 3016 or CC
+322 324 3017 to TO
+325 329 3018 whom WP
+330 332 3019 it PRP
+333 341 3020 belonged VBD
+341 342 3021 . .
+344 345 4001 A NNP
+346 355 4002 spokesman NN
+356 359 4003 for IN
+360 364 4004 NATO NNP ORG https://en.wikipedia.org/wiki/NATO
+364 366 4005 's POS
+367 380 4006 international JJ
+381 390 4007 coalition NN
+391 393 4008 in IN
+394 405 4009 Afghanistan NNP COU https://en.wikipedia.org/wiki/Afghanistan
+406 407 4010 ( (
+407 420 4011 International NNP ORG https://en.wikipedia.org/wiki/International_Security_Assistance_Force
+421 429 4012 Security NNP ORG https://en.wikipedia.org/wiki/International_Security_Assistance_Force
+430 440 4013 Assistance NNP ORG https://en.wikipedia.org/wiki/International_Security_Assistance_Force
+441 446 4014 Force NNP ORG https://en.wikipedia.org/wiki/International_Security_Assistance_Force
+447 449 4015 or CC
+450 454 4016 ISAF NNP ORG https://en.wikipedia.org/wiki/International_Security_Assistance_Force
+454 455 4017 ) )
+456 460 4018 says VBZ
+461 466 4019 there EX
+467 471 4020 were VBD
+472 474 4021 no DT
+475 484 4022 immediate JJ
+485 492 4023 reports NNS
+493 495 4024 of IN
+496 497 4025 a DT
+498 503 4026 crash NN
+504 513 4027 involving VBG
+514 517 4028 any DT
+518 520 4029 of IN
+521 524 4030 its PRP$
+525 533 4031 aircraft NN
+533 534 4032 . .

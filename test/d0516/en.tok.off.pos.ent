@@ -1,0 +1,102 @@
+0 5 1001 Iraqi NNP ORG https://en.wikipedia.org/wiki/Iraqi_Police
+6 12 1002 police NNS ORG https://en.wikipedia.org/wiki/Iraqi_Police
+13 16 1003 say VBP
+17 19 1004 at IN
+20 25 1005 least JJS
+26 28 1006 16 CD
+29 32 1007 bus JJ
+33 43 1008 passengers NNS
+44 48 1009 were VBD
+49 55 1010 killed VBN
+56 58 1011 by IN
+59 60 1012 a DT
+61 69 1013 roadside NN
+70 74 1014 bomb NN
+75 82 1015 Tuesday NNP
+83 85 1016 in IN
+86 94 1017 southern JJ
+95 99 1018 Iraq NNP COU https://en.wikipedia.org/wiki/Iraq
+99 100 1019 . .
+101 102 2001 A NNP
+103 109 2002 police NN
+110 119 2003 spokesman NN
+120 124 2004 says VBZ
+125 128 2005 the DT
+129 132 2006 bus NN
+133 136 2007 was VBD
+137 146 2008 traveling VBG
+147 151 2009 from IN
+152 155 2010 the DT
+156 160 2011 port JJ
+161 165 2012 city NN
+166 168 2013 of IN
+169 174 2014 Basra NNP CIT https://en.wikipedia.org/wiki/Basra
+175 177 2015 to TO
+178 187 2016 Nasariyah NNP CIT https://en.wikipedia.org/wiki/Nasiriyah
+187 188 2017 . .
+190 192 3001 At IN
+193 198 3002 least JJS
+199 201 3003 22 CD
+202 208 3004 people NNS
+209 213 3005 were VBD
+214 221 3006 wounded VBN
+222 224 3007 in IN
+225 228 3008 the DT
+229 234 3009 blast NN
+234 235 3010 . .
+237 239 4001 No DT
+240 245 4002 other JJ
+246 253 4003 details NNS
+254 258 4004 were VBD
+259 270 4005 immediately RB
+271 280 4006 available JJ
+280 281 4007 . .
+282 284 5001 In IN
+285 290 5002 other JJ
+291 295 5003 news NN
+295 296 5004 , ,
+297 300 5005 the DT
+301 305 5006 U.S. NNP ORG https://en.wikipedia.org/wiki/United_States_Army
+306 314 5007 military JJ ORG https://en.wikipedia.org/wiki/United_States_Army
+315 319 5008 says VBZ
+320 321 5009 a DT
+322 326 5010 bomb NN
+327 333 5011 attack NN
+334 340 5012 Monday NNP
+341 347 5013 killed VBD
+348 353 5014 three CD
+354 362 5015 American JJ
+363 371 5016 soldiers NNS
+372 375 5017 and CC
+376 381 5018 their PRP$
+382 392 5019 translator NN
+393 395 5020 in IN
+396 399 5021 the DT
+400 405 5022 Iraqi NNP
+406 414 5023 province NN
+415 417 5024 of IN
+418 424 5025 Diyala NNP COU https://en.wikipedia.org/wiki/Diyala_Governorate
+424 425 5026 . .
+427 429 6001 In IN
+430 431 6002 a DT
+432 440 6003 separate JJ
+441 449 6004 incident NN
+449 450 6005 , ,
+451 454 6006 the DT
+455 463 6007 military NN
+464 468 6008 said VBD
+469 470 6009 a DT
+471 480 6010 suspected VBN
+481 488 6011 suicide NN
+489 493 6012 bomb NN
+494 500 6013 attack NN
+501 507 6014 killed VBD
+508 512 6015 five CD
+513 517 6016 U.S. NNP
+518 526 6017 soldiers NNS
+527 529 6018 on IN
+530 534 6019 foot NN
+535 541 6020 patrol NN
+542 544 6021 in IN
+545 552 6022 Baghdad NNP CIT https://en.wikipedia.org/wiki/Baghdad
+552 553 6023 . .

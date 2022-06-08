@@ -1,0 +1,67 @@
+1 2 1001 A DT
+3 8 1002 group NN
+9 11 1003 of IN
+12 23 1004 independent JJ
+24 36 1005 policymakers NNS
+37 40 1006 and CC
+41 51 1007 economists NNS
+52 55 1008 say VBP
+56 64 1009 economic JJ
+65 71 1010 growth NN
+72 74 1011 is VBZ
+75 81 1012 within IN
+82 87 1013 reach NN
+88 90 1014 of IN
+91 101 1015 developing VBG
+102 111 1016 countries NNS
+112 114 1017 if IN
+115 119 1018 they PRP
+120 125 1019 adopt VBP
+126 129 1020 the DT
+130 135 1021 right JJ
+136 144 1022 policies NNS
+144 145 1023 . .
+146 149 2001 The DT ORG https://en.wikipedia.org/wiki/World_Bank
+150 155 2002 World NNP ORG https://en.wikipedia.org/wiki/World_Bank
+156 160 2003 Bank NNP ORG https://en.wikipedia.org/wiki/World_Bank
+160 162 2004 's POS
+163 173 2005 Commission NNP ORG https://en.wikipedia.org/wiki/Growth_Commission
+174 176 2006 on IN ORG https://en.wikipedia.org/wiki/Growth_Commission
+177 183 2007 Growth NNP ORG https://en.wikipedia.org/wiki/Growth_Commission
+184 187 2008 and CC ORG https://en.wikipedia.org/wiki/Growth_Commission
+188 199 2009 Development NNP ORG https://en.wikipedia.org/wiki/Growth_Commission
+200 203 2010 has VBZ
+204 212 2011 released VBN
+213 214 2012 a DT
+215 218 2013 new JJ
+219 225 2014 report NN
+225 226 2015 , ,
+227 232 2016 which WDT
+233 237 2017 says VBZ
+238 248 2018 developing VBG
+249 258 2019 countries NNS
+259 262 2020 can MD
+263 270 2021 achieve VB
+271 275 2022 fast RB
+275 276 2023 , ,
+277 286 2024 sustained VBD
+287 290 2025 and CC
+291 300 2026 equitable JJ
+301 307 2027 growth NN
+307 308 2028 , ,
+309 318 2029 providing VBG
+319 323 2030 they PRP
+324 327 2031 use VBP
+328 336 2032 formulas NNS
+337 341 2033 used VBN
+342 344 2034 by IN
+345 350 2035 other JJ
+351 361 2036 successful JJ
+362 371 2037 economies NNS
+371 372 2038 . .
+373 376 3001 VOA NNP ENT https://en.wikipedia.org/wiki/Voice_of_America
+376 378 3002 's POS
+379 382 3003 Mil NNP PER
+383 389 3004 Arcega NNP PER
+390 397 3005 reports NNS
+397 398 3006 . .

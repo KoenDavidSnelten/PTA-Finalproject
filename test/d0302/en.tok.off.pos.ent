@@ -1,0 +1,81 @@
+0 8 1001 Pakistan NNP COU https://en.wikipedia.org/wiki/Pakistan
+8 10 1002 's POS
+11 19 1003 military JJ
+20 24 1004 says VBZ
+25 26 1005 a DT
+27 35 1006 roadside NN
+36 40 1007 bomb NN
+41 44 1008 has VBZ
+45 51 1009 killed VBN
+52 55 1010 two CD
+56 64 1011 soldiers NNS
+65 67 1012 in IN
+68 71 1013 the DT
+72 79 1014 country NN
+79 81 1015 's POS
+82 87 1016 North NNP COU https://en.wikipedia.org/wiki/North_Waziristan_District
+88 98 1017 Waziristan NNP COU https://en.wikipedia.org/wiki/North_Waziristan_District
+99 105 1018 tribal JJ
+106 112 1019 region NN
+112 113 1020 . .
+114 118 2001 Four CD
+119 124 2002 other JJ
+125 133 2003 soldiers NNS
+134 138 2004 were VBD
+139 146 2005 wounded VBN
+147 149 2006 in IN
+150 158 2007 Thursday NNP
+158 160 2008 's POS
+161 167 2009 attack NN
+168 170 2010 on IN
+171 172 2011 a DT
+173 181 2012 military JJ
+182 188 2013 convoy NN
+189 191 2014 in IN
+192 199 2015 Spinwam NNP CIT https://en.wikipedia.org/wiki/Spinwam_Tehsil
+199 200 2016 , ,
+201 205 2017 near IN
+206 209 2018 the DT
+210 216 2019 border NN
+217 221 2020 with IN
+222 233 2021 Afghanistan NNP COU https://en.wikipedia.org/wiki/Afghanistan
+233 234 2022 . .
+235 243 3001 Violence NNP
+244 247 3002 has VBZ
+248 257 3003 escalated VBN
+258 260 3004 in IN
+261 266 3005 North NNP COU https://en.wikipedia.org/wiki/North_Waziristan_District
+267 277 3006 Waziristan NNP COU https://en.wikipedia.org/wiki/North_Waziristan_District
+278 283 3007 since IN
+284 288 3008 July NNP
+288 289 3009 , ,
+290 294 3010 when WRB
+295 306 3011 pro-Taleban JJ
+307 316 3012 militants NNS
+317 326 3013 abandoned VBD
+327 328 3014 a DT
+329 337 3015 10-month JJ
+338 343 3016 peace NN
+344 348 3017 deal NN
+349 353 3018 with IN
+354 363 3019 Pakistani NNP
+364 375 3020 authorities NNS
+375 376 3021 . .
+377 380 4001 The DT
+381 391 4002 government NN
+392 395 4003 has VBZ
+396 404 4004 deployed VBN
+405 411 4005 90,000 CD
+412 418 4006 troops NNS
+419 424 4007 along IN
+425 428 4008 the DT
+429 435 4009 Afghan NNP
+436 442 4010 border NN
+443 445 4011 to TO
+446 450 4012 hunt VB
+451 455 4013 down RP
+456 463 4014 Taleban NNP
+464 467 4015 and CC
+468 476 4016 al-Qaida JJ
+477 486 4017 fugitives NNS
+486 487 4018 . .

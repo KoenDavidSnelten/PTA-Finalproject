@@ -1,0 +1,103 @@
+0 3 1001 The DT
+4 8 1002 head NN
+9 11 1003 of IN
+12 15 1004 the DT
+16 28 1005 Organization NNP ORG https://en.wikipedia.org/wiki/OPEC
+29 31 1006 of IN ORG https://en.wikipedia.org/wiki/OPEC
+32 41 1007 Petroleum NNP ORG https://en.wikipedia.org/wiki/OPEC
+42 51 1008 Exporting NNP ORG https://en.wikipedia.org/wiki/OPEC
+52 61 1009 Countries NNPS ORG https://en.wikipedia.org/wiki/OPEC
+62 63 1010 ( (
+63 67 1011 OPEC NNP ORG https://en.wikipedia.org/wiki/OPEC
+67 68 1012 ) )
+69 72 1013 has VBZ
+73 79 1014 called VBN
+80 82 1015 on IN
+83 86 1016 the DT
+87 93 1017 United NNP COU https://en.wikipedia.org/wiki/United_States
+94 100 1018 States NNPS COU https://en.wikipedia.org/wiki/United_States
+101 103 1019 to TO
+104 111 1020 release VB
+112 116 1021 some DT
+117 119 1022 of IN
+120 123 1023 its PRP$
+124 127 1024 oil NN
+128 136 1025 reserves NNS
+137 139 1026 to TO
+140 144 1027 help VB
+145 151 1028 reduce VB
+152 157 1029 world NN
+158 161 1030 oil NN
+162 168 1031 prices NNS
+168 169 1032 . .
+170 177 2001 Purnomo NNP PER https://en.wikipedia.org/wiki/Purnomo_Yusgiantoro
+178 189 2002 Yusgiantoro NNP PER https://en.wikipedia.org/wiki/Purnomo_Yusgiantoro
+189 190 2003 , ,
+191 194 2004 who WP
+195 197 2005 is VBZ
+198 202 2006 also RB
+203 212 2007 Indonesia NNP COU https://en.wikipedia.org/wiki/Indonesia
+212 214 2008 's POS
+215 221 2009 energy NN
+222 230 2010 minister NN
+230 231 2011 , ,
+232 235 2012 did VBD
+236 239 2013 not RB
+240 243 2014 say VB
+244 251 2015 whether IN
+252 255 2016 the DT
+256 262 2017 United NNP COU https://en.wikipedia.org/wiki/United_States
+263 269 2018 States NNPS COU https://en.wikipedia.org/wiki/United_States
+270 273 2019 has VBZ
+274 283 2020 responded VBN
+284 286 2021 to TO
+287 290 2022 the DT
+291 298 2023 request NN
+298 299 2024 . .
+300 303 3001 The DT
+304 310 3002 United NNP COU https://en.wikipedia.org/wiki/United_States
+311 317 3003 States NNPS COU https://en.wikipedia.org/wiki/United_States
+318 321 3004 has VBZ
+322 330 3005 hundreds NNS
+331 333 3006 of IN
+334 342 3007 millions NNS
+343 345 3008 of IN
+346 353 3009 barrels NNS
+354 356 3010 of IN
+357 360 3011 oil NN
+361 363 3012 in IN
+364 367 3013 its PRP$
+368 377 3014 strategic JJ
+378 387 3015 petroleum NN
+388 395 3016 reserve NN
+395 396 3017 . .
+397 400 4001 The DT
+401 408 4002 reserve NN
+409 412 4003 has VBZ
+413 417 4004 been VBN
+418 424 4005 tapped VBN
+425 427 4006 on IN
+428 435 4007 several JJ
+435 436 4008 , ,
+437 448 4009 exceptional JJ
+449 458 4010 occasions NNS
+458 459 4011 . .
+460 465 5001 World NNP
+466 469 5002 oil NN
+470 476 5003 prices NNS
+477 481 5004 have VBP
+482 487 5005 risen VBN
+488 495 5006 sharply RB
+496 500 5007 this DT
+501 505 5008 year NN
+505 506 5009 , ,
+507 510 5010 and CC
+511 520 5011 currently RB
+521 526 5012 stand VBP
+527 529 5013 at IN
+530 534 5014 over IN
+535 536 5015 $ $
+536 538 5016 55 CD
+539 540 5017 a DT
+541 547 5018 barrel NN
+547 548 5019 . .

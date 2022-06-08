@@ -1,0 +1,90 @@
+0 4 1001 Iran NNP COU https://en.wikipedia.org/wiki/Iran
+4 6 1002 's POS
+7 14 1003 nuclear JJ
+15 21 1004 energy NN
+22 27 1005 chief NN
+28 32 1006 says VBZ
+33 36 1007 the DT
+37 44 1008 country NN
+45 48 1009 has VBZ
+49 54 1010 built VBN
+55 56 1011 a DT
+57 60 1012 new JJ
+61 71 1013 generation NN
+72 74 1014 of IN
+75 86 1015 centrifuges NNS
+86 87 1016 , ,
+88 93 1017 which WDT
+94 97 1018 are VBP
+98 102 1019 used VBN
+103 105 1020 to TO
+106 112 1021 enrich VB
+113 120 1022 uranium NN
+120 121 1023 . .
+123 126 2001 Ali NNP PER https://en.wikipedia.org/wiki/Ali_Akbar_Salehi
+127 132 2002 Akbar NNP PER https://en.wikipedia.org/wiki/Ali_Akbar_Salehi
+133 139 2003 Salehi NNP PER https://en.wikipedia.org/wiki/Ali_Akbar_Salehi
+139 140 2004 , ,
+141 144 2005 the DT
+145 149 2006 head NN
+150 152 2007 of IN
+153 156 2008 the DT
+157 163 2009 Atomic NNP ORG https://en.wikipedia.org/wiki/Atomic_Energy_Organization_of_Iran
+164 170 2010 Energy NNP ORG https://en.wikipedia.org/wiki/Atomic_Energy_Organization_of_Iran
+171 183 2011 Organization NNP ORG https://en.wikipedia.org/wiki/Atomic_Energy_Organization_of_Iran
+183 184 2012 , ,
+185 194 2013 announced VBD
+195 198 2014 the DT
+199 210 2015 development NN
+211 218 2016 Tuesday NNP
+218 219 2017 . .
+221 229 3001 Enriched NNP
+230 237 3002 uranium NN
+238 241 3003 can MD
+242 244 3004 be VB
+245 249 3005 used VBN
+250 252 3006 in IN
+253 260 3007 nuclear JJ
+261 265 3008 fuel NN
+266 269 3009 for IN
+270 271 3010 a DT
+272 277 3011 power NN
+278 283 3012 plant NN
+283 284 3013 . .
+285 288 4001 But CC
+289 296 4002 Western JJ
+297 306 4003 countries NNS
+307 314 4004 suspect VBP
+315 319 4005 Iran NNP COU https://en.wikipedia.org/wiki/Iran
+320 322 4006 is VBZ
+323 328 4007 using VBG
+329 332 4008 the DT
+333 343 4009 ingredient NN
+344 346 4010 to TO
+347 352 4011 build VB
+353 354 4012 a DT
+355 362 4013 nuclear JJ
+363 369 4014 weapon NN
+369 370 4015 . .
+372 376 5001 Iran NNP COU https://en.wikipedia.org/wiki/Iran
+377 383 5002 denies VBZ
+384 388 5003 this DT
+388 389 5004 . .
+391 398 6001 Iranian JJ
+399 408 6002 officials NNS
+409 412 6003 are VBP
+413 421 6004 expected VBN
+422 424 6005 to TO
+425 431 6006 resume VB
+432 444 6007 negotiations NNS
+445 449 6008 with IN
+450 455 6009 world NN
+456 462 6010 powers NNS
+463 468 6011 about IN
+469 474 6012 their PRP$
+475 488 6013 controversial JJ
+489 496 6014 nuclear JJ
+497 504 6015 program NN
+505 509 6016 next JJ
+510 514 6017 week NN
+514 515 6018 . .

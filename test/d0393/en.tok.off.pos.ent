@@ -1,0 +1,103 @@
+0 6 1001 French JJ COU https://en.wikipedia.org/wiki/France
+7 12 1002 Prime NNP
+13 21 1003 Minister NNP
+22 31 1004 Dominique NNP PER https://en.wikipedia.org/wiki/Dominique_de_Villepin
+32 34 1005 de NNP PER https://en.wikipedia.org/wiki/Dominique_de_Villepin
+35 43 1006 Villepin NNP PER https://en.wikipedia.org/wiki/Dominique_de_Villepin
+44 47 1007 has VBZ
+48 57 1008 announced VBN
+58 60 1009 he PRP
+61 63 1010 is VBZ
+64 72 1011 formally RB
+73 82 1012 endorsing VBG
+83 86 1013 the DT
+87 99 1014 presidential JJ
+100 103 1015 bid NN
+104 106 1016 of IN
+107 110 1017 his PRP$
+111 119 1018 longtime JJ
+120 125 1019 rival NN
+125 126 1020 , ,
+127 135 1021 Interior NNP
+136 144 1022 Minister NNP
+145 152 1023 Nicolas NNP PER https://en.wikipedia.org/wiki/Nicolas_Sarkozy
+153 160 1024 Sarkozy NNP PER https://en.wikipedia.org/wiki/Nicolas_Sarkozy
+160 161 1025 . .
+162 165 2001 The DT
+166 174 2002 interior JJ
+175 183 2003 minister NN
+184 186 2004 is VBZ
+187 190 2005 the DT
+191 197 2006 leader NN
+198 200 2007 of IN
+201 204 2008 the DT
+205 217 2009 conservative JJ
+218 224 2010 ruling NN
+225 230 2011 party NN
+230 231 2012 , ,
+232 235 2013 the DT
+236 241 2014 Union NNP ORG https://en.wikipedia.org/wiki/Union_for_a_Popular_Movement
+242 245 2015 for IN ORG https://en.wikipedia.org/wiki/Union_for_a_Popular_Movement
+246 247 2016 a DT ORG https://en.wikipedia.org/wiki/Union_for_a_Popular_Movement
+248 255 2017 Popular JJ ORG https://en.wikipedia.org/wiki/Union_for_a_Popular_Movement
+256 264 2018 Movement NNP ORG https://en.wikipedia.org/wiki/Union_for_a_Popular_Movement
+264 265 2019 . .
+266 272 3001 Monday NNP
+272 274 3002 's POS
+275 286 3003 endorsement NN
+287 289 3004 of IN
+290 297 3005 Sarkozy NNP PER https://en.wikipedia.org/wiki/Nicolas_Sarkozy
+298 300 3006 by IN
+301 304 3007 the DT
+305 310 3008 prime JJ
+311 319 3009 minister NN
+320 325 3010 comes VBZ
+326 327 3011 a DT
+328 331 3012 day NN
+332 337 3013 after IN
+338 347 3014 President NNP
+348 355 3015 Jacques NNP PER https://en.wikipedia.org/wiki/Jacques_Chirac
+356 362 3016 Chirac NNP PER https://en.wikipedia.org/wiki/Jacques_Chirac
+363 372 3017 announced VBD
+373 376 3018 his PRP$
+377 387 3019 retirement NN
+387 388 3020 . .
+389 392 4001 Mr. NNP
+393 399 4002 Chirac NNP PER https://en.wikipedia.org/wiki/Jacques_Chirac
+400 403 4003 has VBZ
+404 407 4004 not RB
+408 416 4005 endorsed VBN
+417 418 4006 a DT
+419 428 4007 candidate NN
+429 432 4008 for IN
+433 437 4009 next JJ
+438 443 4010 month NN
+443 445 4011 's POS
+446 454 4012 election NN
+454 455 4013 . .
+456 458 5001 In IN
+459 467 5002 addition NN
+468 470 5003 to TO
+471 478 5004 Sarkozy NNP PER https://en.wikipedia.org/wiki/Nicolas_Sarkozy
+478 479 5005 , ,
+480 483 5006 the DT
+484 487 5007 two CD
+488 493 5008 other JJ
+494 498 5009 main JJ
+499 509 5010 candidates NNS
+510 515 5011 vying VBG
+516 518 5012 to TO
+519 526 5013 succeed VB
+527 530 5014 Mr. NNP PER https://en.wikipedia.org/wiki/Jacques_Chirac
+531 537 5015 Chirac NNP PER https://en.wikipedia.org/wiki/Jacques_Chirac
+538 541 5016 are VBP
+542 551 5017 Socialist JJ
+552 558 5018 leader NN
+559 567 5019 Segolene NNP PER https://en.wikipedia.org/wiki/Ségolène_Royal
+568 573 5020 Royal NNP PER https://en.wikipedia.org/wiki/Ségolène_Royal
+574 577 5021 and CC
+578 586 5022 centrist JJ
+587 593 5023 leader NN
+594 602 5024 Francois NNP PER https://en.wikipedia.org/wiki/François_Bayrou
+603 609 5025 Bayrou NNP PER https://en.wikipedia.org/wiki/François_Bayrou
+609 610 5026 . .
